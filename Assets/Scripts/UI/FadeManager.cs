@@ -14,7 +14,9 @@ public class FadeManager : ManagerBase
 		_fadeImage = GameUtil.FindChild(_fadeCanvas, "FadeImage").GetComponent<Image>();
 
 		// 最初は真っ暗にしておく
-		FadeOut(0);
+		//FadeOut(0);
+		// とりあえずデバッグ用に開ける
+		FadeIn(0);
 	}
 
 	public override void OnUpdate()

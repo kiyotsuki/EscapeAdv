@@ -37,4 +37,14 @@ public static class GameUtil
 		}
 		return trans.gameObject;
 	}
+
+	public static MapData GetCurrentMap()
+	{
+		var manager = GetManager<MapManager>();
+		if(manager == null)
+		{
+			return null;
+		}
+		return manager.GetCurrentMap();
+	}
 }

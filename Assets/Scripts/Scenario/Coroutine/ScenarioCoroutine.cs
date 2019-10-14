@@ -21,4 +21,10 @@ public partial class ScenarioCoroutine
 
 		yield break;
 	}
+
+	public static IEnumerator TestEvent()
+	{
+		yield return StartTalk("モモカ", "お、これは・・・");
+		yield return StartTalk("モモカ", "テストだね！");
+	}
 }

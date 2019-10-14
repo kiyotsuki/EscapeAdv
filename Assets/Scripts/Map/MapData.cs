@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MapData : MonoBehaviour
 {
-	public void SetMapChips(int width, int height, MapChipData[] mapChips)
+	public void Setup(int width, int height, MapChipData[] mapChips, GameObject playerRoot)
 	{
 		_width = width;
 		_height = height;
 
 		_mapChips = mapChips;
+		_playerRoot = playerRoot;
 	}
 
 	public List<Vector2> GetRoute(Vector2 start, Vector2 goal)
@@ -46,7 +47,7 @@ public class MapData : MonoBehaviour
 			if (checkRoute(lastIndex, next) == false)
 			{
 				// 先頭に追加していく
-				route.Insert(0, _mapChips[nIndex].transform.position);
+				route.Insert(0, _mapChips[nIndex].GetPos());
 				lastIndex = nIndex;
 			}
 			if (next == startChip.GetIndex())
@@ -233,14 +234,22 @@ public class MapData : MonoBehaviour
 		return ret;
 	}
 
-	[SerializeField]
-	private int _width;
+	public GameObject GetPlayerRoot()
+	{
+		return _playerRoot;
+	}
 
 	[SerializeField]
-	private int _height;
+	int _width;
 
 	[SerializeField]
-	private MapChipData[] _mapChips;
+	int _height;
 
-	private int[] _naviMap = null;
+	[SerializeField]
+	MapChipData[] _mapChips;
+
+	[SerializeField]
+	GameObject _playerRoot;
+
+	int[] _naviMap = null;
 }

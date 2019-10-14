@@ -4,35 +4,35 @@ using UnityEngine;
 /// ゲーム内パラメータ
 /// ParamGeneratorによって自動出力
 /// </summary>
-public class ParamTest
+public class ParamPlayer
 {
 	public enum ID
 	{
 		Invalid = -1,
-		Test1 = 0,
-		Test2 = 1,
-		Test3 = 2,
+		Momoka = 0,
+		Sakura = 1,
+		Tsubaki = 2,
 	}
 	
 	public class Data
 	{
-		public Data(string Name, string Desc, int Rate)
+		public Data(ParamPlayer.ID Id, string Name, string IconName)
 		{
+			this.Id = Id;
 			this.Name = Name;
-			this.Desc = Desc;
-			this.Rate = Rate;
+			this.IconName = IconName;
 		}
 		
+		public ParamPlayer.ID Id { get; }
 		public string Name { get; }
-		public string Desc { get; }
-		public int Rate { get; }
+		public string IconName { get; }
 	}
 	
 	private static readonly Data[] data = 
 	{
-		new Data("タップ＋１", "タップ数を1増やす", 20),
-		new Data("タップ＋５", "タップ数を5増やす", 20),
-		new Data("タップ＋１０", "タップ数を10増やす", 20),
+		new Data((ID)0, "モモカ", "IconMomoka"),
+		new Data((ID)1, "サクラ", "IconSakura"),
+		new Data((ID)2, "ツバキ", "IconTsubaki"),
 	};
 	
 	public static Data Get(int id)

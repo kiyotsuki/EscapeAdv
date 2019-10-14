@@ -10,59 +10,11 @@ public class MapManager : ManagerBase
 		_mapCanvas = GameUtil.GetNamedSceneObject("MapCanvas");
 		_mapCanvas.SetActive(true);
 		
-		_playerMarker = GameUtil.FindChild(_mapCanvas, "Player");
-		_targetMarker = GameUtil.FindChild(_mapCanvas, "Target");
-
 		var allMap = _mapCanvas.GetComponentsInChildren<MapData>();
 		foreach(var map in allMap)
 		{
 			var name = map.name;
 			_mapDataDict.Add(name.GetHashCode(), map);
-		}
-
-		ChangeMap("TestMap");
-	}
-
-	public override void OnUpdate()
-	{
-		if(GameUtil.GetManager<ScenarioManager>().RunningScenario())
-		{
-			return;
-		}
-
-		if(Input.GetMouseButton(0))
-		{
-			var targetPos = Input.mousePosition;
-			_targetMarker.transform.position = targetPos;
-
-			var playerPos = _playerMarker.transform.position;
-
-			_route = _currentMap.GetRoute(playerPos, targetPos);
-		}
-
-		if(_route != null && _route.Count > 0)
-		{
-			var playerPos = _playerMarker.transform.position;
-
-			var r = _route[0];
-
-			var diff = r - (Vector2)playerPos;
-			var sqrMag = diff.sqrMagnitude;
-
-			if (sqrMag < 5 * 5)
-			{
-				_route.RemoveAt(0);
-			}
-			else
-			{
-				int spd = 200;
-
-				var dir = diff.normalized * spd;
-				playerPos.x += dir.x * Time.deltaTime;
-				playerPos.y += dir.y * Time.deltaTime;
-
-				_playerMarker.transform.position = playerPos;
-			}
 		}
 	}
 
@@ -83,22 +35,18 @@ public class MapManager : ManagerBase
 				data.gameObject.SetActive(false);
 			}
 		}
+		
+		var playerManager = GameUtil.GetManager<PlayerManager>();
+		playerManager.OnChangeMap(_currentMap);
 	}
 
-	public void SetPlayer(int x, int y)
+	public MapData GetCurrentMap()
 	{
-		var chip = _currentMap.GetMapChipData(x, y);
-		_playerMarker.transform.position = chip.transform.position;
+		return _currentMap;
 	}
 
-	private GameObject _mapCanvas = null;
-	private Dictionary<int, MapData> _mapDataDict = new Dictionary<int, MapData>();
+	GameObject _mapCanvas = null;
+	Dictionary<int, MapData> _mapDataDict = new Dictionary<int, MapData>();
 
-	private GameObject _playerMarker = null;
-	private GameObject _targetMarker = null;
-
-
-	private MapData _currentMap = null;
-
-	private List<Vector2> _route = null;
+	MapData _currentMap = null;
 }

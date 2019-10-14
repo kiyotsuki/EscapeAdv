@@ -44,17 +44,41 @@ $P( )
 	}
 
 	/// <summary>
-	/// すべてのパラメータをビルドする
+	/// マップを作製する
 	/// </summary>
 	private void CreateMap(string name, string mapCode)
 	{
-		var mapRoot = new GameObject(name);
-		mapRoot.transform.SetParent(_mapCanavs.transform);
-		var mapData = mapRoot.AddComponent<MapData>();
+		var mapObject = getOrAddChild(_mapCanavs, name);
+		MapData mapData = mapObject.AddComponent<MapData>();
+		if (mapData == null)
+		{
+			mapData = mapObject.AddComponent<MapData>();
+		}
+
+		var mapRoot = GameUtil.FindChild(mapObject, "Map");
+		if(mapRoot != null)
+		{
+			GameObject.DestroyImmediate(mapRoot);
+			mapRoot = null;
+		}
+		
+		// マップ本体のルート
+		mapRoot = new GameObject("MapRoot");
+		mapRoot.transform.SetParent(mapObject.transform);
+
+		// プレイヤー入れる場所
+		var playerRoot = getOrAddChild(mapObject, "PlayerRoot");
+		playerRoot.transform.SetParent(null);
+		playerRoot.transform.SetParent(mapObject.transform);
+
+		// イベント入れる場所
+		var eventRoot = getOrAddChild(mapObject, "EventRoot");
+		eventRoot.transform.SetParent(null);
+		eventRoot.transform.SetParent(mapObject.transform);
+
 
 		List<MapChipData> mapChipDataList = new List<MapChipData>();
-
-
+		
 		// []と\rを除去して改行で分割
 		var regex = new System.Text.RegularExpressions.Regex("\\[|\\]|\r");
 		var codes = regex.Replace(mapCode, "").Split('\n');
@@ -121,10 +145,21 @@ $P( )
 			}
 		}
 
-		mapData.SetMapChips(mapW, mapH, mapChipDataList.ToArray());
+		mapData.Setup(mapW, mapH, mapChipDataList.ToArray(), playerRoot);
 
-		mapRoot.transform.localScale = new Vector3(0.4f, 0.4f, 1);
-		mapRoot.transform.localPosition = new Vector3(0, 300, 0);
+		mapObject.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+		mapObject.transform.localPosition = new Vector3(0, 300, 0);
+	}
+
+	private GameObject getOrAddChild(GameObject go, string name)
+	{
+		var child = GameUtil.FindChild(go, name);
+		if(child == null)
+		{
+			child = new GameObject(name);
+			child.transform.SetParent(go.transform);
+		}
+		return child;
 	}
 
 	GameObject _mapCanavs = null;

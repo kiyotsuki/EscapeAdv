@@ -1,0 +1,8 @@
+変数名,Name,IconName
+説明,名前,アイコン名
+型,string,string
+初期値,null,null
+#,,
+Momoka,モモカ,IconMomoka
+Sakura,サクラ,IconSakura
+Tsubaki,ツバキ,IconTsubaki

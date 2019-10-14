@@ -23,13 +23,18 @@ public class MapChipData : MonoBehaviour
 		return _colision;
 	}
 
+	public Vector2 GetPos()
+	{
+		return gameObject.transform.position;
+	}
+
 
 	[SerializeField]
-	private int _index;
+	int _index;
 
 	[SerializeField]
-	private Image _image;
+	Image _image;
 
 	[SerializeField]
-	private bool _colision;
+	bool _colision;
 }

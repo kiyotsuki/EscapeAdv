@@ -16,12 +16,12 @@ public partial class ScenarioManager : ManagerBase
 
 	public override void OnInitialized()
 	{
+		ScenarioUtil.ChangeMap("TestMap");
+		ScenarioUtil.SetPlayer(ParamPlayer.ID.Momoka, 10, 10);
+		ScenarioUtil.SetPlayer(ParamPlayer.ID.Sakura, 11, 10);
+		ScenarioUtil.SetPlayer(ParamPlayer.ID.Tsubaki, 12, 10);
 	}
 
-	public override void OnUpdate()
-	{
-	}
-	
 	/// <summary>
 	/// シナリオを起動する
 	/// ScenarioCoroutineクラスから該当の名前を探して実行する
@@ -29,13 +29,16 @@ public partial class ScenarioManager : ManagerBase
 	/// <param name="name"></param>
 	public void ExecuteScenario(string scenario)
 	{
+		if(_runningScenario)
+		{
+			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
+			return;
+		}
 		GameUtil.StartCoroutine(executeScenario(scenario));
 	}
 
 	private IEnumerator executeScenario(string scenario)
 	{
-		_runningScenario = true;
-
 		System.Type type = typeof(ScenarioCoroutine);
 		var method = type.GetMethod(scenario);
 		if(method == null)
@@ -45,6 +48,7 @@ public partial class ScenarioManager : ManagerBase
 		}
 
 		// シナリオ実行
+		_runningScenario = true;
 		yield return method.Invoke(null, null);
 
 		// 以下シナリオ実行終了
@@ -55,6 +59,9 @@ public partial class ScenarioManager : ManagerBase
 			// 最後フェードかかってたら開ける
 			yield return ScenarioUtil.FadeIn();
 		}
+
+		// トークを隠す
+		ScenarioUtil.HideTalk();
 
 		_runningScenario = false;
 	}

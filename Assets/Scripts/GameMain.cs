@@ -40,6 +40,7 @@ public class GameMain : MonoBehaviour
 		// 各マネージャ作成
 		_managers.Add(new FadeManager());
 		_managers.Add(new MapManager());
+		_managers.Add(new PlayerManager());
 		_managers.Add(new ScenarioManager());
 		_managers.Add(new DebugManager());
 
@@ -88,11 +89,11 @@ public class GameMain : MonoBehaviour
 	}
 
 	// 各マネージャ
-	private List<ManagerBase> _managers = new List<ManagerBase>();
+	List<ManagerBase> _managers = new List<ManagerBase>();
 
 	// 名前付きシーンオブジェクト
-	private Dictionary<int, GameObject> _namedSceneObject = new Dictionary<int, GameObject>();
+	Dictionary<int, GameObject> _namedSceneObject = new Dictionary<int, GameObject>();
 
 	[SerializeField]
-	private GameObject[] _sceneObjects;
+	GameObject[] _sceneObjects;
 }

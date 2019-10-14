@@ -92,13 +92,13 @@ public class DebugManager : ManagerBase
 		public abstract void Open(DebugManager manager);
 	}
 
-	private DebugPage _page = null;
+	DebugPage _page = null;
 
-	private List<DebugPage> _history = new List<DebugPage>();
-	private List<GameObject> _buttonList = new List<GameObject>();
+	List<DebugPage> _history = new List<DebugPage>();
+	List<GameObject> _buttonList = new List<GameObject>();
 
-	private GameObject _debugCanvas = null;
+	GameObject _debugCanvas = null;
 
-	private GameObject _buttonSource = null;
-	private GameObject _listContent = null;
+	GameObject _buttonSource = null;
+	GameObject _listContent = null;
 }

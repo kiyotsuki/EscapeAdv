@@ -56,7 +56,7 @@ public class ParamScriptBuilder
 			WriteLine();
 
 			// データクラス定義
-			WriteDataClassDefine();
+			WriteDataClassDefine(scriptName);
 			WriteLine();
 
 			// データ配列
@@ -90,20 +90,20 @@ public class ParamScriptBuilder
 	/// データクラスの定義
 	/// コンストラクタとパラメータを用意
 	/// </summary>
-	private void WriteDataClassDefine()
+	private void WriteDataClassDefine(string scriptName)
 	{
 		WriteBlock($"public class Data");
 
 		// コンストラクタの宣言部分作成
-		var text = "";
+		var text = $"{scriptName}.ID Id";
 		foreach (var def in valueDefines)
 		{
-			if (text != "") text += ", ";
-			text += $"{ def.Type } { def.Name }";
+			text += $", { def.Type } { def.Name }";
 		}
 
 		// コンストラクタ作成
 		WriteBlock($"public Data({ text })");
+		WriteLine($"this.Id = Id;");
 		foreach (var def in valueDefines)
 		{
 			WriteLine($"this.{ def.Name } = { def.Name };");
@@ -112,6 +112,7 @@ public class ParamScriptBuilder
 		WriteLine();
 
 		// パラメータ定義
+		WriteLine($"public { scriptName }.ID Id {{ get; }}");
 		foreach (var def in valueDefines)
 		{
 			WriteLine($"public { def.Type } { def.Name } {{ get; }}");
@@ -153,10 +154,10 @@ public class ParamScriptBuilder
 		for (var i = 0; i < count; i++)
 		{
 			var values = dataSources[i];
-			var text = "";
+			var text = $"(ID){i}";
 			foreach (var def in valueDefines)
 			{
-				if (text != "") text += ", ";
+				text += ", ";
 				text += def.ConvertValue(values[def.Index]);
 			}
 			WriteLine($"new Data({ text }),");

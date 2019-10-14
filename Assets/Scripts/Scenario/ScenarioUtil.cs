@@ -43,6 +43,18 @@ public static class ScenarioUtil
 		manager.ChangeMap(name);
 	}
 
+	public static void SetPlayer(ParamPlayer.ID id, int x, int y)
+	{
+		var manager = GameUtil.GetManager<PlayerManager>();
+		manager.SetPlayer(id, x, y);
+	}
+
+	public static void ChangePlayer(ParamPlayer.ID id)
+	{
+		var manager = GameUtil.GetManager<PlayerManager>();
+		manager.ChangePlayer(id);
+	}
+
 	public static IEnumerator StartTalk(string name, string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
