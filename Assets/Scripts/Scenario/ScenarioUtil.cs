@@ -63,29 +63,38 @@ public static class ScenarioUtil
 	public static IEnumerator StartTalk(string name, string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-		talkWindow.gameObject.SetActive(true);
 		talkWindow.SetName(name);
 		talkWindow.SetText(text);
 
 		return new WaitUntil(() => {
-			return talkWindow.IsTalking() == false;
+			if(talkWindow.IsTalking() == false)
+			{
+				talkWindow.Hide();
+				return true;
+			}
+			return false;
 		});
 	}
 
 	public static IEnumerator AddTalk(string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-		talkWindow.gameObject.SetActive(true);
-		
+		talkWindow.AddText(text);
+
 		return new WaitUntil(() => {
-			return talkWindow.IsTalking() == false;
+			if (talkWindow.IsTalking() == false)
+			{
+				talkWindow.Hide();
+				return true;
+			}
+			return false;
 		});
 	}
 
 	public static void HideTalk()
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-		talkWindow.gameObject.SetActive(false);
+		talkWindow.Hide();
 	}
 
 	public static IEnumerator RequestMove(ParamPlayer.ID id, int cx, int cy)

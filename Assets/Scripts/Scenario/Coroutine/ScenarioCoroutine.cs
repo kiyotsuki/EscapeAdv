@@ -24,9 +24,19 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
+		yield return StartTalk("モモカ", "移動してみるよ！");
+
 		yield return RequestMove(ParamPlayer.ID.Momoka, 3, 0);
 
-		yield return StartTalk("モモカ", "お、これは・・・");
-		yield return StartTalk("モモカ", "テストだね！");
+		yield return StartTalk("モモカ", "次はおねえちゃん！");
+
+		yield return RequestMove(ParamPlayer.ID.Sakura, 10, 10);
+
+		yield return StartTalk("モモカ", "全員集合！");
+
+		RequestMove(ParamPlayer.ID.Sakura, 8, 5);
+		RequestMove(ParamPlayer.ID.Momoka, 8, 5);
+		yield return RequestMove(ParamPlayer.ID.Tsubaki, 8, 5);
+
 	}
 }

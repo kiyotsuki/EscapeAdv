@@ -107,6 +107,8 @@ public class TalkWindow : MonoBehaviour
 		_isTalking = true;
 		_sourceText += text;
 		_nextIcon.SetActive(false);
+
+		gameObject.SetActive(true);
 	}
 
 	/// <summary>
@@ -117,6 +119,14 @@ public class TalkWindow : MonoBehaviour
 		_talkText.text = _sourceText;
 		_viewLength = _sourceText.Length;
 		_nextIcon.SetActive(true);
+	}
+
+	/// <summary>
+	/// 非表示にする
+	/// </summary>
+	public void Hide()
+	{
+		gameObject.SetActive(false);
 	}
 	
 

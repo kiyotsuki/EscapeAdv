@@ -67,7 +67,7 @@ public partial class ScenarioManager : ManagerBase
 		}
 
 		// トークを隠す
-		ScenarioUtil.HideTalk();
+		_talkWindow.Hide();
 
 		_running = false;
 	}
