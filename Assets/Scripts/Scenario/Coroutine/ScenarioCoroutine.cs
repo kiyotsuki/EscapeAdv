@@ -24,6 +24,8 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
+		yield return RequestMove(ParamPlayer.ID.Momoka, 3, 0);
+
 		yield return StartTalk("モモカ", "お、これは・・・");
 		yield return StartTalk("モモカ", "テストだね！");
 	}

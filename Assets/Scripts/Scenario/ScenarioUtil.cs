@@ -17,6 +17,11 @@ public static class ScenarioUtil
 		GetManager().ExecuteScenario(scenario);
 	}
 
+	public static bool IsInScenario()
+	{
+		return GetManager().IsRunning();
+	}
+
 	public static IEnumerator FadeIn(float time = 0.3f)
 	{
 		var manager = GameUtil.GetManager<FadeManager>();
@@ -83,5 +88,14 @@ public static class ScenarioUtil
 		talkWindow.gameObject.SetActive(false);
 	}
 
+	public static IEnumerator RequestMove(ParamPlayer.ID id, int cx, int cy)
+	{
+		var playerManager = GameUtil.GetManager<PlayerManager>();
+		var controller = playerManager.GetPlayerController(id);
+		controller.RequestMove(cx, cy);
 
+		return new WaitUntil(() => {
+			return controller.IsMoving() == false;
+		});
+	}
 }

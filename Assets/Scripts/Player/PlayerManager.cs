@@ -13,49 +13,42 @@ public class PlayerManager : ManagerBase
 			var data = ParamPlayer.Get(i);
 			var icon = GameUtil.GetNamedSceneObject(data.IconName);
 
-			_players.Add(new PlayerData(data.Id, icon));
+			var button = icon.GetComponent<Button>();
+			button.onClick.AddListener(() => {
+				ChangePlayer(data.Id);
+			});
+			_playerControllers.Add(data.Id, new PlayerController(data, icon));
 		}
 	}
-
+	
 	public override void OnUpdate()
 	{
+		foreach(var v in _playerControllers)
+		{
+			v.Value.OnUpdate();
+		}
+
 		// プレイヤーがいる場合、操作を行う
-		if (_currentPlayer != null)
+		if (_currentPlayerController != null && ScenarioUtil.IsInScenario() == false)
 		{
 			if (Input.GetMouseButton(0))
 			{
-				var targetPos = (Vector2)Input.mousePosition;
-				var playerPos = _currentPlayer.GetPos();
-
-				var map = GameUtil.GetCurrentMap();
-				_moveRoute = map.GetRoute(playerPos, targetPos);
+				var targetPos = (Vector2)Input.mousePosition;				
+				_currentPlayerController.RequestMove(targetPos);
 			}
+		}
+	}
+	
 
-			// リクエストされた移動ルートがある場合移動
-			if (_moveRoute != null && _moveRoute.Count > 0)
-			{
-				var playerPos = _currentPlayer.GetPos();
-
-				var r = _moveRoute[0];
-
-				var diff = r - (Vector2)playerPos;
-				var sqrMag = diff.sqrMagnitude;
-
-				if (sqrMag < 5 * 5)
-				{
-					_moveRoute.RemoveAt(0);
-				}
-				else
-				{
-					int spd = 200;
-
-					var dir = diff.normalized * spd;
-					playerPos.x += dir.x * Time.deltaTime;
-					playerPos.y += dir.y * Time.deltaTime;
-
-					_currentPlayer.SetPos(playerPos);
-				}
-			}
+	/// <summary>
+	/// シナリオ開始通知
+	/// 移動などをキャンセルする
+	/// </summary>
+	public void OnStartScenario()
+	{
+		foreach (var v in _playerControllers)
+		{
+			v.Value.CancelMove();
 		}
 	}
 
@@ -66,14 +59,13 @@ public class PlayerManager : ManagerBase
 	public void OnChangeMap(MapData map)
 	{
 		var playerRoot = map.GetPlayerRoot();
-		foreach (var player in _players)
+		foreach (var v in _playerControllers)
 		{
-			var icon = player.GetIcon();
+			var icon = v.Value.GetIcon();
 			icon.transform.SetParent(playerRoot.transform);
 			icon.SetActive(false);
 		}
-		_currentPlayer = null;
-		_moveRoute = null;
+		_currentPlayerController = null;
 	}
 
 	/// <summary>
@@ -82,7 +74,7 @@ public class PlayerManager : ManagerBase
 	/// </summary>
 	public void SetPlayer(ParamPlayer.ID id, int x, int y)
 	{
-		var player = _players[(int)id];
+		var player = _playerControllers[id];
 		player.SetActive(true);
 
 		var mapData = GameUtil.GetCurrentMap();
@@ -98,33 +90,20 @@ public class PlayerManager : ManagerBase
 	/// </summary>
 	public void ChangePlayer(ParamPlayer.ID id)
 	{
-		var player = _players[(int)id];
-		_currentPlayer = player;
-
-		_moveRoute = null;
+		var player = _playerControllers[id];
+		_currentPlayerController = player;
 	}
-
-	public Vector2 GetPlayerPos()
+	
+	public PlayerController GetPlayerController(ParamPlayer.ID id = ParamPlayer.ID.Invalid)
 	{
-		if(_currentPlayer == null)
+		if(id == ParamPlayer.ID.Invalid)
 		{
-			return Vector2.zero;
+			return _currentPlayerController;
 		}
-		return _currentPlayer.GetPos();
+		return _playerControllers[id];
 	}
 
-	public bool IsPlayerMoving()
-	{
-		if(_moveRoute == null)
-		{
-			return false;
-		}
-		return _moveRoute.Count > 0;
-	}
 
-	PlayerData _currentPlayer = null;
-	List<PlayerData> _players = new List<PlayerData>();
-	List<PlayerData> _activePlayers = new List<PlayerData>();
-
-	List<Vector2> _moveRoute = null;
+	PlayerController _currentPlayerController = null;
+	Dictionary<ParamPlayer.ID, PlayerController> _playerControllers = new Dictionary<ParamPlayer.ID, PlayerController>();
 }

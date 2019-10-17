@@ -29,7 +29,7 @@ public partial class ScenarioManager : ManagerBase
 	/// <param name="name"></param>
 	public void ExecuteScenario(string scenario)
 	{
-		if(_runningScenario)
+		if(_running)
 		{
 			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
 			return;
@@ -47,8 +47,14 @@ public partial class ScenarioManager : ManagerBase
 			yield break;
 		}
 
+		// シナリオ実行開始状態に
+		_running = true;
+
+		// PlayerManagerにシナリオ実行開始通知
+		var playerManager = GameUtil.GetManager<PlayerManager>();
+		playerManager.OnStartScenario();
+
 		// シナリオ実行
-		_runningScenario = true;
 		yield return method.Invoke(null, null);
 
 		// 以下シナリオ実行終了
@@ -63,7 +69,7 @@ public partial class ScenarioManager : ManagerBase
 		// トークを隠す
 		ScenarioUtil.HideTalk();
 
-		_runningScenario = false;
+		_running = false;
 	}
 
 	/// <summary>
@@ -79,13 +85,13 @@ public partial class ScenarioManager : ManagerBase
 	/// シナリオ実行中か判定
 	/// </summary>
 	/// <returns></returns>
-	public bool RunningScenario()
+	public bool IsRunning()
 	{
-		return _runningScenario;
+		return _running;
 	}
 
-	bool _runningScenario = false;
-
+	bool _running = false;
+	
 	GameObject _scenarioCanvas = null;
 
 	TalkWindow _talkWindow = null;

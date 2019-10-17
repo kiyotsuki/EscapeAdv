@@ -17,7 +17,9 @@ public class MapData : MonoBehaviour
 	{
 		var startChip = GetNearMapChipData(start);
 		var goalChip = GetNearMapChipData(goal);
-		if(startChip == goalChip)
+		int goalIndex = goalChip.GetIndex();
+
+		if (startChip == goalChip)
 		{
 			return null;
 		}
@@ -26,24 +28,31 @@ public class MapData : MonoBehaviour
 		{
 			_naviMap = new int[_mapChips.Length];
 		}
+		// ナビマップリセット
 		for (int i = 0; i < _naviMap.Length; i++)
 		{
-			_naviMap[i] = int.MaxValue;
+			_naviMap[i] = 0;
 		}
 
 		// ナビマップ更新
-		setupNaviMap(startChip.GetIndex(), goalChip.GetIndex(), 0);
+		setupNaviMap(startChip.GetIndex(), goalChip.GetIndex(), 50);
 
+		if(_naviMap[goalIndex] == 0)
+		{
+			// もし到達しなかった場合はnull
+			return null;
+		}
 
-		int lastIndex = goalChip.GetIndex();
+		// LastIndexから直通でいける値最大のマスを探索
+		// 直通できなかったらLastIndexを更新してそこからの最大値を探索
+		int lastIndex = goalIndex;
 		int nIndex = lastIndex;
-
 		var route = new List<Vector2>();
 		route.Add(goalChip.transform.position);
 
 		for (int i = 0; i < 1000; i++)
 		{
-			var next = getMinValueIndex(nIndex);
+			var next = getMaxValueIndex(nIndex);
 			if (checkRoute(lastIndex, next) == false)
 			{
 				// 先頭に追加していく
@@ -62,53 +71,47 @@ public class MapData : MonoBehaviour
 	}
 
 
-	private bool setupNaviMap(int index, int target, int value)
+	private void setupNaviMap(int index, int target, int value)
 	{
 		if (index >= _mapChips.Length || index < 0)
 		{
 			// マップ外に出たら終了
-			return false;
+			return;
 		}
 		var chip = _mapChips[index];
 		
 		if (chip.GetColision())
 		{
 			// 壁に当たったら終わり
-			return false;
+			return;
 		}
-		if (_naviMap[index] <= value)
+		if (_naviMap[index] >= value)
 		{
-			// 既により小さい値がセットされていたら終了
-			return true;
+			// 既により大きい値がセットされていたら終了
+			return;
 		}
 		_naviMap[index] = value;
 		if (index == target)
 		{
 			// ゴールに到達したなら終了
-			return true;
+			return;
 		}
 
 		// 上下左右
-		int nextValue = value + 10;
+		int nextValue = value - 1;
+		if(nextValue <= 0)
+		{
+			// Valueを使い果たした終了
+			return;
+		}
 
-		var l = setupNaviMap(index - 1, target, nextValue);
-		var r = setupNaviMap(index + 1, target, nextValue);
-		var u = setupNaviMap(index - _width, target, nextValue);
-		var d = setupNaviMap(index + _width, target, nextValue);
-
-		/*
-		// 斜め四方向
-		nextValue += 4;
-
-		if (l && u) setupNaviMap(index - 1 - _width, target, nextValue);
-		if (r && u) setupNaviMap(index + 1 - _width, target, nextValue);
-		if (l && d) setupNaviMap(index - 1 + _width, target, nextValue);
-		if (r && d) setupNaviMap(index + 1 + _width, target, nextValue);
-		*/
-		return true;
+		setupNaviMap(index - 1, target, nextValue);
+		setupNaviMap(index + 1, target, nextValue);
+		setupNaviMap(index - _width, target, nextValue);
+		setupNaviMap(index + _width, target, nextValue);
 	}
 
-	private int getMinValueIndex(int index)
+	private int getMaxValueIndex(int index)
 	{
 		// 最大8方向
 		int[] validIndexs = new int[8];
@@ -136,14 +139,14 @@ public class MapData : MonoBehaviour
 			if (checkColision(r)) validIndexs[count++] = d + 1;
 		}
 
-		int min = int.MaxValue;
+		int max = 0;
 		int ret = 0;
 		for (int i = 0; i < count; i++)
 		{
 			var value = _naviMap[validIndexs[i]];
-			if (min > value)
+			if (max < value)
 			{
-				min = value;
+				max = value;
 				ret = validIndexs[i];
 			}
 		}
@@ -208,9 +211,9 @@ public class MapData : MonoBehaviour
 		return _mapChips[index];
 	}
 
-	public MapChipData GetMapChipData(int x, int y)
+	public MapChipData GetMapChipData(int cx, int cy)
 	{
-		int index = y * _width + x;
+		int index = cy * _width + cx;
 		return GetMapChipData(index);
 	}
 

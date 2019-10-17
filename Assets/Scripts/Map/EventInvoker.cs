@@ -4,43 +4,52 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CheckEventData : MonoBehaviour
+public class EventInvoker : MonoBehaviour
 {
 	public void Start()
 	{
 		// リスナー登録
-		_button.onClick.AddListener(OnClick);
+		_button.onClick.AddListener(execute);
+		_button.gameObject.SetActive(false);
 	}
 
-	public void OnClick()
+	private void execute()
 	{
 		// シナリオ実行
 		ScenarioUtil.ExecuteScenario(_scenario);
 	}
-
+	
 	public void Update()
 	{
 		var playerManager = GameUtil.GetManager<PlayerManager>();
 		if(playerManager != null)
 		{
 			var mpos = (Vector2)this.transform.position;
-			var ppos = playerManager.GetPlayerPos();
+			var ppos = playerManager.GetPlayerController().GetPos();
 
+			bool enter = false;
 			var diff = mpos - ppos;
-			if(diff.sqrMagnitude < 50 * 50)
+			if (diff.sqrMagnitude < _distance * _distance)
 			{
-				_button.gameObject.SetActive(true);
+				enter = true;
 			}
-			else
+
+			if(_preEnter != enter)
 			{
-				_button.gameObject.SetActive(false);
+				_button.gameObject.SetActive(enter);
+				_preEnter = enter;
 			}
 		}
 	}
-
+	
 	[SerializeField]
 	Button _button;
 	
 	[SerializeField]
 	string _scenario;
+
+	[SerializeField]
+	float _distance;
+
+	bool _preEnter = false;
 }
