@@ -7,17 +7,21 @@ public class PlayerManager : ManagerBase
 {
 	public override void Initialize()
 	{
+		var mapCanvas = GameUtil.GetNamedSceneObject("MapCanvas");
+		var uiCanvas = GameUtil.GetNamedSceneObject("UICanvas");
+
 		// マスターデータからプレイヤーを作成
 		for (int i = 0; i < ParamPlayer.Count; i++)
 		{
 			var data = ParamPlayer.Get(i);
-			var icon = GameUtil.GetNamedSceneObject(data.IconName);
-
-			var button = icon.GetComponent<Button>();
+			var mapIcon = GameUtil.FindChild(mapCanvas, data.IconName);
+			var uiImage = GameUtil.FindChild(uiCanvas, data.ImageName);
+			
+			var button = mapIcon.GetComponent<Button>();
 			button.onClick.AddListener(() => {
 				ChangePlayer(data.Id);
 			});
-			_playerControllers.Add(data.Id, new PlayerController(data, icon));
+			_playerControllers.Add(data.Id, new PlayerController(data, mapIcon, uiImage));
 		}
 	}
 	
@@ -63,7 +67,7 @@ public class PlayerManager : ManagerBase
 		{
 			var icon = v.Value.GetIcon();
 			icon.transform.SetParent(playerRoot.transform);
-			icon.SetActive(false);
+			v.Value.SetActive(false);
 		}
 		_currentPlayerController = null;
 	}
@@ -92,6 +96,10 @@ public class PlayerManager : ManagerBase
 	{
 		var player = _playerControllers[id];
 		_currentPlayerController = player;
+		foreach (var v in _playerControllers)
+		{
+			v.Value.OnChangeCurrent(player);
+		}
 	}
 	
 	public PlayerController GetPlayerController(ParamPlayer.ID id = ParamPlayer.ID.Invalid)

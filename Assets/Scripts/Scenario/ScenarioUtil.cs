@@ -60,10 +60,12 @@ public static class ScenarioUtil
 		manager.ChangePlayer(id);
 	}
 
-	public static IEnumerator StartTalk(string name, string text)
+	public static IEnumerator StartTalk(string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-		talkWindow.SetName(name);
+		var currentPlayer = GameUtil.GetPlayerController();
+
+		talkWindow.SetName(currentPlayer.GetName());
 		talkWindow.SetText(text);
 
 		return new WaitUntil(() => {
@@ -107,4 +109,5 @@ public static class ScenarioUtil
 			return controller.IsMoving() == false;
 		});
 	}
+	
 }

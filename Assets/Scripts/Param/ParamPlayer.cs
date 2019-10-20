@@ -16,25 +16,27 @@ public class ParamPlayer
 	
 	public class Data
 	{
-		public Data(ParamPlayer.ID Id, string Name, string IconName, ParamHeart.ID InitHeart)
+		public Data(ParamPlayer.ID Id, string Name, string IconName, string ImageName, ParamHeart.ID InitHeart)
 		{
 			this.Id = Id;
 			this.Name = Name;
 			this.IconName = IconName;
+			this.ImageName = ImageName;
 			this.InitHeart = InitHeart;
 		}
 		
 		public ParamPlayer.ID Id { get; }
 		public string Name { get; }
 		public string IconName { get; }
+		public string ImageName { get; }
 		public ParamHeart.ID InitHeart { get; }
 	}
 	
 	private static readonly Data[] data = 
 	{
-		new Data((ID)0, "モモカ", "IconMomoka", ParamHeart.ID.Curious),
-		new Data((ID)1, "サクラ", "IconSakura", ParamHeart.ID.Serious),
-		new Data((ID)2, "ツバキ", "IconTsubaki", ParamHeart.ID.Cool),
+		new Data((ID)0, "モモカ", "IconMomoka", "ImageMomoka", ParamHeart.ID.Curious),
+		new Data((ID)1, "サクラ", "IconSakura", "ImageSakura", ParamHeart.ID.Serious),
+		new Data((ID)2, "ツバキ", "IconTsubaki", "ImageTsubaki", ParamHeart.ID.Cool),
 	};
 	
 	public static Data Get(int id)

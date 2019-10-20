@@ -1,8 +1,8 @@
-変数名,Name,IconName,InitHeart
-説明,名前,アイコン名,初期ハート
-型,string,string,Heart
-初期値,null,null,Invalid
-#,,,
-Momoka,モモカ,IconMomoka,Curious
-Sakura,サクラ,IconSakura,Serious
-Tsubaki,ツバキ,IconTsubaki,Cool
+変数名,Name,IconName,ImageName,InitHeart
+説明,名前,アイコン名,画像名,初期ハート
+型,string,string,string,Heart
+初期値,null,null,null,Invalid
+#,,,,
+Momoka,モモカ,IconMomoka,ImageMomoka,Curious
+Sakura,サクラ,IconSakura,ImageSakura,Serious
+Tsubaki,ツバキ,IconTsubaki,ImageTsubaki,Cool

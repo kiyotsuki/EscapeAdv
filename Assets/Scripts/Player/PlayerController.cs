@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerController
 {
-	public PlayerController(ParamPlayer.Data data, GameObject icon)
+	public PlayerController(ParamPlayer.Data data, GameObject icon, GameObject image)
 	{
 		_id = data.Id;
 		_icon = icon;
+		_image = image;
 		
 		// アイコンをクリックしたらそのキャラに切り替える
 		_button = icon.GetComponent<Button>();
@@ -57,6 +58,11 @@ public class PlayerController
 		}
 	}
 
+	public string GetName()
+	{
+		return ParamPlayer.Get(_id).Name;
+	}
+
 	public Vector2 GetPos()
 	{
 		return _icon.transform.position;
@@ -75,6 +81,20 @@ public class PlayerController
 	public void SetActive(bool b)
 	{
 		_icon.SetActive(b);
+		if(b == false)
+		{
+			_image.SetActive(false);
+		}
+	}
+
+	public void OnChangeCurrent(PlayerController controller)
+	{
+		if(controller != this)
+		{
+			_image.SetActive(false);
+			return;
+		}
+		_image.SetActive(true);
 	}
 
 	public void SetHeart(ParamHeart.ID heart)
@@ -126,7 +146,7 @@ public class PlayerController
 	}
 
 	ParamPlayer.ID _id;
-	GameObject _icon;
+	GameObject _icon, _image;
 	Button _button;
 
 	List<ParamItem.ID> _takeItems = new List<ParamItem.ID>();
