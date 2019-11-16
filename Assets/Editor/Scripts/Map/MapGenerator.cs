@@ -18,23 +18,16 @@ public class MapGenerator
 		var chipSource = canvas.transform.Find("MapChip").gameObject;
 
 		var generator = new MapGenerator(canvas, chipSource);
-		generator.CreateMap("TestMap", @"
-$A(*)
-$P( )
 
-[#][#][/][#][#][#][#][#][#][#][/][/][#][#][#]
-[#][*][ ][*][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][#]
-[#][*][ ][ ][ ][*][ ][ ][ ][ ][ ][ ][*][ ][#]
-[#][*][*][*][*][*][ ][ ][ ][ ][ ][ ][ ][ ][#]
-[#][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][ ][#]
-[#][ ][ ][ ][ ][ ][ ][ ][*][*][ ][*][*][ ][#]
-[#][ ][ ][*][*][*][ ][ ][ ][ ][ ][ ][ ][ ][#]
-[#][ ][ ][*][/][*][ ][ ][*][*][ ][*][*][ ][#]
-[/][ ][ ][*][*][*][ ][ ][ ][ ][ ][ ][ ][ ][#]
-[/][ ][ ][ ][ ][ ][ ][ ][*][*][ ][*][*][ ][#]
-[#][ ][ ][ ][ ][ ][ ][P][ ][ ][ ][ ][ ][ ][#]
-[#][#][#][#][#][#][/][/][#][#][#][#][#][#][#]
-");
+		var mapAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Editor/Map/MapSource.txt");
+		var mapSources = mapAsset.text.Split('$');
+
+		for (int i = 1; i < mapSources.Length; i += 2)
+		{
+			var name = mapSources[i];
+			var code = mapSources[i + 1];
+			generator.CreateMap(name, code);
+		}
 	}
 
 	public MapGenerator(GameObject canvas, GameObject chipSource)
@@ -55,7 +48,7 @@ $P( )
 			mapData = mapObject.AddComponent<MapData>();
 		}
 
-		var mapRoot = GameUtil.FindChild(mapObject, "Map");
+		var mapRoot = GameUtil.FindChild(mapObject, "MapRoot");
 		if(mapRoot != null)
 		{
 			GameObject.DestroyImmediate(mapRoot);
@@ -124,20 +117,17 @@ $P( )
 				}
 				switch (mapChip)
 				{
-					case ' ':
+					default:
+					//case '	':
 						chipData.Setup(index, new Color(0.8f, 0.8f, 0.8f), false);
 						break;
 
-					case '#':
+					case '■':
 						chipData.Setup(index, new Color(0, 0, 0), true);
 						break;
 
-					case '*':
+					case '□':
 						chipData.Setup(index, new Color(0.5f, 0.5f, 0.5f), true);
-						break;
-
-					case '/':
-						chipData.Setup(index, new Color(0.3f, 0.3f, 0.3f), true);
 						break;
 				}
 

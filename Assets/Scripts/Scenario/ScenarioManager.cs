@@ -16,7 +16,7 @@ public partial class ScenarioManager : ManagerBase
 
 	public override void OnInitialized()
 	{
-		ScenarioUtil.ChangeMap("TestMap");
+		ScenarioUtil.ChangeMap("Entrance");
 		ScenarioUtil.SetPlayer(ParamPlayer.ID.Momoka, 10, 10);
 		ScenarioUtil.SetPlayer(ParamPlayer.ID.Sakura, 11, 10);
 		ScenarioUtil.SetPlayer(ParamPlayer.ID.Tsubaki, 12, 10);

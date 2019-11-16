@@ -7,7 +7,7 @@ public partial class ScenarioCoroutine
 {
 	public static IEnumerator Opening()
 	{
-		ChangeMap("TestMap");
+		ChangeMap("Entrance");
 		SetPlayer(ParamPlayer.ID.Momoka, 6, 10);
 		yield return FadeIn(3);
 		yield return new WaitForSeconds(1);
