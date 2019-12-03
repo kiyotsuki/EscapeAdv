@@ -45,22 +45,6 @@ public static class GameUtil
 		{
 			return null;
 		}
-		return manager.GetCurrentMap();
-	}
-
-	/// <summary>
-	/// プレイヤーコントローラ取得
-	/// 引数を省略するとカレントプレイヤーを取得する
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	public static PlayerController GetPlayerController(ParamPlayer.ID id = ParamPlayer.ID.Invalid)
-	{
-		var manager = GetManager<PlayerManager>();
-		if(manager == null)
-		{
-			return null;
-		}
-		return manager.GetPlayerController(id);
+		return null;
 	}
 }

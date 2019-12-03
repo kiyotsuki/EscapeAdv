@@ -9,44 +9,65 @@ public class MapManager : ManagerBase
 	{
 		_mapCanvas = GameUtil.GetNamedSceneObject("MapCanvas");
 		_mapCanvas.SetActive(true);
-		
-		var allMap = _mapCanvas.GetComponentsInChildren<MapData>();
-		foreach(var map in allMap)
+
+		_mapList = _mapCanvas.GetComponentsInChildren<MapData>();
+		_currentMap = _mapList[0];
+
+		_searchIcon = GameUtil.GetNamedSceneObject("SearchIcon").GetComponent<Image>();
+		_searchIcon.enabled = false;
+	}
+
+	public override void OnUpdate()
+	{
+		if(_searchIcon.enabled)
 		{
-			var name = map.name;
-			_mapDataDict.Add(name.GetHashCode(), map);
+			_searchTime += Time.deltaTime;
+			_searchIcon.fillAmount = _searchTime;
+			if (_searchTime > 1.0f)
+			{
+				_searchIcon.enabled = false;
+				searchFinished(_searchIcon.transform.position);
+			}
 		}
 	}
 
-	public void ChangeMap(string name)
+	public void OnMapTouch(Vector2 pos, bool on)
 	{
-		var hash = name.GetHashCode();
-		_currentMap = null;
-		foreach(var mapPair in _mapDataDict)
+		if (on)
 		{
-			var data = mapPair.Value;
-			if(mapPair.Key == hash)
-			{
-				data.gameObject.SetActive(true);
-				_currentMap = data;
-			}
-			else
-			{
-				data.gameObject.SetActive(false);
-			}
+			_searchIcon.transform.position = pos;
+			_searchIcon.enabled = true;
+			_searchIcon.fillAmount = 0;
+			_searchTime = 0;
 		}
-		
-		var playerManager = GameUtil.GetManager<PlayerManager>();
-		playerManager.OnChangeMap(_currentMap);
+		else
+		{
+			_searchIcon.enabled = false;
+		}
 	}
 
-	public MapData GetCurrentMap()
+
+	private void searchFinished(Vector2 pos)
 	{
-		return _currentMap;
+		var scenarioManager = GameUtil.GetManager<ScenarioManager>();
+
+
+		var ev = _currentMap.GetMapEvent(pos);
+		if (ev != null)
+		{
+			scenarioManager.ExecuteScenario(ev.EventName);
+		}
+		else
+		{
+			scenarioManager.ExecuteScenario("NotFound");
+		}
 	}
+
 
 	GameObject _mapCanvas = null;
-	Dictionary<int, MapData> _mapDataDict = new Dictionary<int, MapData>();
-
+	MapData[] _mapList;
 	MapData _currentMap = null;
+
+	float _searchTime = 0;
+	Image _searchIcon;
 }

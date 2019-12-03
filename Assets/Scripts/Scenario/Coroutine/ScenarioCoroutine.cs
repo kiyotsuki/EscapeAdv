@@ -13,7 +13,6 @@ public partial class ScenarioCoroutine
 		yield return new WaitForSeconds(1);
 		yield return StartTalk("おぉ～…！");
 
-		yield return RequestMove(ParamPlayer.ID.Momoka, 6, 5);
 		yield return new WaitForSeconds(1);
 
 		yield return StartTalk("すごーい！\n本物の廃墟だよー！！");
@@ -23,7 +22,6 @@ public partial class ScenarioCoroutine
 		yield return StartTalk("走ったら危ないでしょ！\nもっと足元とか、周囲に気を付けて・・・");
 
 		ChangePlayer(ParamPlayer.ID.Momoka);
-		yield return RequestMove(ParamPlayer.ID.Momoka, 3, 5);
 		yield return StartTalk("うわぁ、壁とかすっごいボロボロ！\n");
 		yield return AddTalk("テンションあがるぅ！");
 
@@ -44,7 +42,6 @@ public partial class ScenarioCoroutine
 		yield return StartTalk("老朽化した建物って、\nなんだか歴史を感じませんか？");
 
 		ChangePlayer(ParamPlayer.ID.Momoka);
-		yield return RequestMove(ParamPlayer.ID.Momoka, 7, 7);
 		yield return StartTalk("さすがツバキちゃん！\n");
 		yield return AddTalk("廃墟はロマンだよねっ！");
 
@@ -67,19 +64,11 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
-		yield return StartTalk("移動してみるよ！");
+		yield return StartTalk("お、何かあるよ！");
+	}
 
-		yield return RequestMove(ParamPlayer.ID.Momoka, 3, 0);
-
-		yield return StartTalk("次はおねえちゃん！");
-
-		yield return RequestMove(ParamPlayer.ID.Sakura, 10, 10);
-
-		yield return StartTalk("全員集合！");
-
-		RequestMove(ParamPlayer.ID.Sakura, 8, 5);
-		RequestMove(ParamPlayer.ID.Momoka, 8, 5);
-		yield return RequestMove(ParamPlayer.ID.Tsubaki, 8, 5);
-
+	public static IEnumerator NotFound()
+	{
+		yield return StartTalk("特になんもないなぁ");
 	}
 }

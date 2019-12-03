@@ -124,15 +124,11 @@ public class PlayerController
 
 	public void RequestMove(int cx, int cy)
 	{
-		var crrentMap = GameUtil.GetCurrentMap();
-		var chip = crrentMap.GetMapChipData(cx, cy);
-		_moveRoute = crrentMap.GetRoute(GetPos(), chip.GetPos());
+
 	}
 
 	public void RequestMove(Vector2 pos)
 	{
-		var crrentMap = GameUtil.GetCurrentMap();
-		_moveRoute = crrentMap.GetRoute(GetPos(), pos);
 	}
 
 	public void CancelMove()

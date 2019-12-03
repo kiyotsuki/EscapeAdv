@@ -44,8 +44,6 @@ public static class ScenarioUtil
 
 	public static void ChangeMap(string name)
 	{
-		var manager = GameUtil.GetManager<MapManager>();
-		manager.ChangeMap(name);
 	}
 
 	public static void SetPlayer(ParamPlayer.ID id, int x, int y)
@@ -63,9 +61,8 @@ public static class ScenarioUtil
 	public static IEnumerator StartTalk(string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-		var currentPlayer = GameUtil.GetPlayerController();
 
-		talkWindow.SetName(currentPlayer.GetName());
+		talkWindow.SetName("Test");
 		talkWindow.SetText(text);
 
 		return new WaitUntil(() => {
@@ -98,16 +95,4 @@ public static class ScenarioUtil
 		var talkWindow = GetManager().GetTalkWindow();
 		talkWindow.Hide();
 	}
-
-	public static IEnumerator RequestMove(ParamPlayer.ID id, int cx, int cy)
-	{
-		var playerManager = GameUtil.GetManager<PlayerManager>();
-		var controller = playerManager.GetPlayerController(id);
-		controller.RequestMove(cx, cy);
-
-		return new WaitUntil(() => {
-			return controller.IsMoving() == false;
-		});
-	}
-	
 }
