@@ -9,16 +9,16 @@ public class MapEvent : MonoBehaviour
 	public bool IsEnter(Vector2 pos)
 	{
 		var rectTrans = (RectTransform)this.transform;
-		var w = rectTrans.rect.width / 2.0f;
-		var h = rectTrans.rect.height / 2.0f;
 
-		var maxPos = rectTrans.rect.max;
-		var minPos = rectTrans.rect.min;
-		/*
-		Vector2 myPos = transform.position;
-		var minPos = myPos - new Vector2(w, h);
-		var maxPos = myPos + new Vector2(w, h);
-		*/
+		// starts bottom left and rotates to top left, then top right, and finally bottom right. Note that bottom left
+		var corners = new Vector3[4];
+		rectTrans.GetWorldCorners(corners);
+
+		// 最小は左下、最大は右上
+		var minPos = (Vector2)corners[0];
+		var maxPos = (Vector2)corners[2];
+
+		
 		if (minPos.x > pos.x || maxPos.x < pos.x)
 		{
 			return false;
