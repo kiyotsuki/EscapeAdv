@@ -71,4 +71,16 @@ public partial class ScenarioCoroutine
 	{
 		yield return StartTalk("特になんもないなぁ");
 	}
+
+
+	public static IEnumerator ItemCheck_Key()
+	{
+		yield return StartTalk("これは・・・鍵だね！");
+	}
+
+	public static IEnumerator ItemUse_Key()
+	{
+		yield return StartTalk("カギをつかうよ！");
+	}
+
 }

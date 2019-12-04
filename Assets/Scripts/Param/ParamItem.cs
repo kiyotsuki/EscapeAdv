@@ -10,6 +10,9 @@ public class ParamItem
 	{
 		Invalid = -1,
 		Dummy = 0,
+		Key = 1,
+		Light = 2,
+		Diary = 3,
 	}
 	
 	public class Data
@@ -29,6 +32,9 @@ public class ParamItem
 	private static readonly Data[] data = 
 	{
 		new Data((ID)0, "ダミーアイテム", "ダミーのアイテム"),
+		new Data((ID)1, "どこかの鍵", "どこかの鍵。どこかで使える"),
+		new Data((ID)2, "懐中電灯", "非常用の懐中電灯"),
+		new Data((ID)3, "日記", "院長のものと思われる日記帳"),
 	};
 	
 	public static Data Get(int id)

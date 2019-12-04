@@ -40,6 +40,7 @@ public class GameMain : MonoBehaviour
 		// 各マネージャ作成
 		_managers.Add(new FadeManager());
 		_managers.Add(new MapManager());
+		_managers.Add(new MenuManager());
 		_managers.Add(new PlayerManager());
 		_managers.Add(new ScenarioManager());
 		_managers.Add(new DebugManager());

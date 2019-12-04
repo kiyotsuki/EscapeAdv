@@ -34,6 +34,10 @@ public partial class ScenarioManager : ManagerBase
 			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
 			return;
 		}
+
+		var menuManager = GameUtil.GetManager<MenuManager>();
+		menuManager.CloseMenu();
+
 		GameUtil.StartCoroutine(executeScenario(scenario));
 	}
 
