@@ -7,7 +7,6 @@ public class AdventureManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_useItemTab.SetActive(false);
 		_useItemCanselButton.onClick.AddListener(() =>
 		{
 			SetUseItem(null);
@@ -29,12 +28,12 @@ public class AdventureManager : ManagerBase
 		if (data == null)
 		{
 			_useItemId = ParamItem.ID.Invalid;
-			_useItemTab.SetActive(false);
+			_useItemDisplayAnimator.SetTrigger("Out");
 			return;
 		}
 		_useItemId = data.Id;
-		_useItemLabel.text = data.Name;
-		_useItemTab.SetActive(true);
+		_useItemNameLabel.text = data.Name;
+		_useItemDisplayAnimator.SetTrigger("In");
 	}
 
 	public ParamItem.ID GetUseItemId()
@@ -49,10 +48,10 @@ public class AdventureManager : ManagerBase
 	Button _itemMenuButton;
 
 	[SerializeField]
-	GameObject _useItemTab;
+	Animator _useItemDisplayAnimator;
 
 	[SerializeField]
-	Text _useItemLabel;
+	Text _useItemNameLabel;
 
 	[SerializeField]
 	Button _useItemCanselButton;

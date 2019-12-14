@@ -11,7 +11,6 @@ public class MenuManager : ManagerBase
 		go.transform.SetParent(_menuCanvas.transform, false);
 
 		_inventoryMenu = go.GetComponent<InventoryMenu>();
-		_inventoryMenu.Hide();
 		yield break;
 	}
 
