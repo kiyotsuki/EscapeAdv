@@ -64,7 +64,17 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
-		yield return StartTalk("お、何かあるよ！");
+		if (GetUseItemId() == ParamItem.ID.Diary)
+		{
+			var adventureManager = GameUtil.GetManager<AdventureManager>();
+			adventureManager.SetUseItem(null);
+
+			yield return StartTalk("日記を使ったよ！");
+		}
+		else
+		{
+			yield return StartTalk("お、何かあるよ！");
+		}
 	}
 
 	public static IEnumerator NotFound()

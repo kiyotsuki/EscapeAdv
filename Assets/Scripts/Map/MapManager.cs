@@ -9,19 +9,25 @@ public class MapManager : ManagerBase
 	{
 		_mapList = _mapCanvas.GetComponentsInChildren<MapData>();
 		_currentMap = _mapList[0];
-		_searchIcon.enabled = false;
+		_searchIcon = GameObject.Instantiate(_searchIconPref);
+		_searchIcon.transform.SetParent(_mapCanvas.transform, false);
+		_searchIcon.SetActive(false);
+
+		_missIcon = GameObject.Instantiate(_missIconPref);
+		_missIcon.transform.SetParent(_mapCanvas.transform, false);
+		_missIcon.SetActive(false);
+
 		yield break;
 	}
 
 	public override void OnUpdateGame()
 	{
-		if(_searchIcon.enabled)
+		if(_searchIcon.activeSelf)
 		{
 			_searchTime += Time.deltaTime;
-			_searchIcon.fillAmount = _searchTime;
 			if (_searchTime > 1.0f)
 			{
-				_searchIcon.enabled = false;
+				_searchIcon.SetActive(false);
 				searchFinished(_searchIcon.transform.position);
 			}
 		}
@@ -31,14 +37,13 @@ public class MapManager : ManagerBase
 	{
 		if (on)
 		{
+			_searchIcon.SetActive(true);
 			_searchIcon.transform.position = pos;
-			_searchIcon.enabled = true;
-			_searchIcon.fillAmount = 0;
 			_searchTime = 0;
 		}
 		else
 		{
-			_searchIcon.enabled = false;
+			_searchIcon.SetActive(false);
 		}
 	}
 
@@ -55,7 +60,9 @@ public class MapManager : ManagerBase
 		}
 		else
 		{
-			scenarioManager.ExecuteScenario("NotFound");
+			_missIcon.SetActive(false);
+			_missIcon.SetActive(true);
+			_missIcon.transform.position = _searchIcon.transform.position;
 		}
 	}
 
@@ -66,8 +73,14 @@ public class MapManager : ManagerBase
 	MapData[] _mapList;
 
 	[SerializeField]
-	Image _searchIcon;
+	GameObject _searchIconPref;
 
+	[SerializeField]
+	GameObject _missIconPref;
+
+
+	GameObject _searchIcon;
+	GameObject _missIcon;
 
 	MapData _currentMap = null;
 	float _searchTime = 0;

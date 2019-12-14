@@ -38,13 +38,16 @@ public class InventoryMenu : MenuBase
 	private void checkItem(ParamItem.Data data)
 	{
 		var scenarioManager = GameUtil.GetManager<ScenarioManager>();
-		scenarioManager.ExecuteScenario("CheckItem_" + data.Name);
+		scenarioManager.ExecuteScenario("CheckItem_" + data.Id);
 		Close();
 	}
 
 	private void useItem(ParamItem.Data data)
 	{
+		var adventureManager = GameUtil.GetManager<AdventureManager>();
+		adventureManager.SetUseItem(data);
 
+		Close();
 	}
 
 

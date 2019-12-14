@@ -91,4 +91,9 @@ public static class ScenarioUtil
 		var talkWindow = GetManager().GetTalkWindow();
 		talkWindow.Hide();
 	}
+
+	public static ParamItem.ID GetUseItemId()
+	{
+		return GameUtil.GetManager<AdventureManager>().GetUseItemId();
+	}
 }
