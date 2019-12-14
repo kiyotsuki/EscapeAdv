@@ -4,24 +4,13 @@ using UnityEngine;
 
 public partial class ScenarioManager : ManagerBase
 {
-	public override void Initialize()
+	protected override IEnumerator Setup()
 	{
-		_scenarioCanvas = GameUtil.GetNamedSceneObject("ScenarioCanvas");
-
-		var talkWindowObject = GameUtil.FindChild(_scenarioCanvas, "TalkWindow");
-		_talkWindow = talkWindowObject.GetComponent<TalkWindow>();
-		talkWindowObject.SetActive(false);
-	}		
-
-
-	public override void OnInitialized()
-	{
-		ScenarioUtil.ChangeMap("Entrance");
-		ScenarioUtil.SetPlayer(ParamPlayer.ID.Momoka, 10, 10);
-		ScenarioUtil.SetPlayer(ParamPlayer.ID.Sakura, 11, 10);
-		ScenarioUtil.SetPlayer(ParamPlayer.ID.Tsubaki, 12, 10);
+		_scenarioCanvas.SetActive(false);
+		_talkWindow.Hide();
+		yield break;
 	}
-
+	
 	/// <summary>
 	/// シナリオを起動する
 	/// ScenarioCoroutineクラスから該当の名前を探して実行する
@@ -35,10 +24,7 @@ public partial class ScenarioManager : ManagerBase
 			return;
 		}
 
-		var menuManager = GameUtil.GetManager<MenuManager>();
-		menuManager.CloseMenu();
-
-		GameUtil.StartCoroutine(executeScenario(scenario));
+		StartCoroutine(executeScenario(scenario));
 	}
 
 	private IEnumerator executeScenario(string scenario)
@@ -50,13 +36,10 @@ public partial class ScenarioManager : ManagerBase
 			Debug.LogError("シナリオが見つかりません Scenario=" + scenario);
 			yield break;
 		}
+		_scenarioCanvas.SetActive(true);
 
 		// シナリオ実行開始状態に
 		_running = true;
-
-		// PlayerManagerにシナリオ実行開始通知
-		var playerManager = GameUtil.GetManager<PlayerManager>();
-		playerManager.OnStartScenario();
 
 		// シナリオ実行
 		yield return method.Invoke(null, null);
@@ -72,6 +55,7 @@ public partial class ScenarioManager : ManagerBase
 
 		// トークを隠す
 		_talkWindow.Hide();
+		_scenarioCanvas.SetActive(false);
 
 		_running = false;
 	}
@@ -93,10 +77,14 @@ public partial class ScenarioManager : ManagerBase
 	{
 		return _running;
 	}
-
-	bool _running = false;
 	
+	[SerializeField]
 	GameObject _scenarioCanvas = null;
 
+	[SerializeField]
 	TalkWindow _talkWindow = null;
+
+
+	bool _running = false;
+
 }

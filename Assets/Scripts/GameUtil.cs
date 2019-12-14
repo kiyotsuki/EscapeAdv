@@ -11,17 +11,7 @@ public static class GameUtil
 	{
 		return GameMain.Instance.GetManager<T>();
 	}
-
-	public static GameObject GetNamedSceneObject(string name)
-	{
-		return GameMain.Instance.GetNamedSceneObject(name);
-	}
-
-	public static void StartCoroutine(IEnumerator iEnumerator)
-	{
-		GameMain.Instance.StartCoroutine(iEnumerator);
-	}
-
+	
 	public static GameObject FindChild(GameObject go, string name)
 	{
 		if(go == null)
@@ -36,15 +26,5 @@ public static class GameUtil
 			return null;
 		}
 		return trans.gameObject;
-	}
-
-	public static MapData GetCurrentMap()
-	{
-		var manager = GetManager<MapManager>();
-		if(manager == null)
-		{
-			return null;
-		}
-		return null;
 	}
 }

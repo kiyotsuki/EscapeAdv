@@ -5,36 +5,32 @@ using UnityEngine.UI;
 
 public class MenuManager : ManagerBase
 {
-	public override void Initialize()
+	protected override IEnumerator Setup()
 	{
-		_menuCanvas = GameUtil.GetNamedSceneObject("MenuCanvas");
+		var go = GameObject.Instantiate(_inventoryMenuPref);
+		go.transform.SetParent(_menuCanvas.transform, false);
 
-		var itemButtonObject = GameUtil.GetNamedSceneObject("ItemButton");
-		var itemButton = itemButtonObject.GetComponent<Button>();
-
-		itemButton.onClick.AddListener(onClickItemMenu);
-
-		var trans = _menuCanvas.transform;
-		var itemMenuObject = trans.Find("ItemMenu");
-		_itemMenu = itemMenuObject.GetComponent<ItemMenu>();
+		_inventoryMenu = go.GetComponent<InventoryMenu>();
+		_inventoryMenu.Hide();
+		yield break;
 	}
 
-	public void onClickItemMenu()
+	public void OpenInventoryMenu()
 	{
 		var list = new List<ParamItem.ID>();
 		for (int i = 0; i < ParamItem.Count; i++)
 		{
 			list.Add((ParamItem.ID)i);
 		}
-		_itemMenu.Open(list);
+		_inventoryMenu.Setup(list);
+		_inventoryMenu.Open();
 	}
 
-	public void CloseMenu()
-	{
-		_itemMenu.gameObject.SetActive(false);
-	}
-
+	[SerializeField]
 	GameObject _menuCanvas = null;
 
-	ItemMenu _itemMenu = null;
+	[SerializeField]
+	GameObject _inventoryMenuPref = null;
+
+	InventoryMenu _inventoryMenu = null;
 }

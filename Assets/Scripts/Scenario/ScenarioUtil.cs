@@ -48,14 +48,10 @@ public static class ScenarioUtil
 
 	public static void SetPlayer(ParamPlayer.ID id, int x, int y)
 	{
-		var manager = GameUtil.GetManager<PlayerManager>();
-		manager.SetPlayer(id, x, y);
 	}
 
 	public static void ChangePlayer(ParamPlayer.ID id)
 	{
-		var manager = GameUtil.GetManager<PlayerManager>();
-		manager.ChangePlayer(id);
 	}
 
 	public static IEnumerator StartTalk(string text)

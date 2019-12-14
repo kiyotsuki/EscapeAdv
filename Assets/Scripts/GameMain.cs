@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ゲームメイン
 /// メインループを持つクラス
-/// ここで各マネージャを生成し管理する
+/// 各マネージャを管理する
 /// </summary>
 public class GameMain : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class GameMain : MonoBehaviour
 	/// インスタンス
 	/// </summary>
 	public static GameMain Instance { get; private set; }
-	
+
 
 	/// <summary>
 	/// ゲームの開始処理
@@ -24,48 +24,58 @@ public class GameMain : MonoBehaviour
 		// Staticアクセスできるようにする
 		Instance = this;
 
-		// 登録されたオブジェクトをNamedSceneObjectに登録
-		foreach(var go in _sceneObjects)
+		_managers = new ManagerBase[_managerPrefs.Length];
+		for (int i = 0; i < _managerPrefs.Length; i++)
 		{
-			var name = go.name;
-			var key = name.GetHashCode();
-			if(_namedSceneObject.ContainsKey(key))
-			{
-				Debug.LogError("同じ名前のSceneObjectが存在します Name=" + name);
-				continue;
-			}
-			_namedSceneObject.Add(key, go);
-		}
+			var go = GameObject.Instantiate(_managerPrefs[i]);
+			go.transform.SetParent(this.transform, false);
 
-		// 各マネージャ作成
-		_managers.Add(new FadeManager());
-		_managers.Add(new MapManager());
-		_managers.Add(new MenuManager());
-		_managers.Add(new PlayerManager());
-		_managers.Add(new ScenarioManager());
-		_managers.Add(new DebugManager());
-
-		// 各マネージャ初期化
-		foreach (var manager in _managers)
-		{
-			manager.Initialize();
-		}
-
-		// 初期化終了通知
-		foreach (var manager in _managers)
-		{
-			manager.OnInitialized();
+			_managers[i] = go.GetComponent<ManagerBase>();
 		}
 	}
 
-	void Update()
+	public void Update()
 	{
-		foreach (var manager in _managers)
+		if(!_initialized)
 		{
-			manager.OnUpdate();
+			// 未初期化なら全てのマネージャの初期化終了を待つ
+			// 初期化自体は各マネージャがStartで行っている
+			bool complete = true;
+			for (int i = 0; i < _managers.Length; i++)
+			{
+				if(_managers[i].IsInitialized() == false)
+				{
+					complete = false;
+					break;
+				}
+			}
+
+			// 全てのマネージャの初期化が終わった
+			if(complete)
+			{
+				// 初期化完了通知
+				for (int i = 0; i < _managers.Length; i++)
+				{
+					_managers[i].OnStartGame();
+				}
+				_initialized = true;
+			}
+		}
+		else
+		{
+			//　初期化後ループ呼び出し
+			for (int i = 0; i < _managers.Length; i++)
+			{
+				_managers[i].OnUpdateGame();
+			}
 		}
 	}
 
+	/// <summary>
+	/// マネージャ取得
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
 	public T GetManager<T>() where T : ManagerBase
 	{
 		foreach (var manager in _managers)
@@ -78,23 +88,15 @@ public class GameMain : MonoBehaviour
 		return null;
 	}
 	
-	public GameObject GetNamedSceneObject(string name)
-	{
-		var hash = name.GetHashCode();
-		if (_namedSceneObject.ContainsKey(hash) == false)
-		{
-			Debug.LogError("登録されていないSceneObjectを取得しようとしました Name=" + name);
-			return null;
-		}
-		return _namedSceneObject[hash];
-	}
 
-	// 各マネージャ
-	List<ManagerBase> _managers = new List<ManagerBase>();
-
-	// 名前付きシーンオブジェクト
-	Dictionary<int, GameObject> _namedSceneObject = new Dictionary<int, GameObject>();
-
+	// 各マネージャプレハブ
 	[SerializeField]
-	GameObject[] _sceneObjects;
+	GameObject[] _managerPrefs = null;
+
+
+	// 各マネージャ実体
+	ManagerBase[] _managers = null;
+
+	// 初期化終了フラグ
+	bool _initialized = false;
 }

@@ -5,29 +5,24 @@ using UnityEngine.UI;
 
 public class DebugManager : ManagerBase
 {
-	public override void Initialize()
+	protected override IEnumerator Setup()
 	{
-		_debugCanvas = GameUtil.GetNamedSceneObject("DebugCanvas");
 		_debugCanvas.SetActive(true);
 
-		_listContent = GameUtil.FindChild(_debugCanvas, "Scroll View/Viewport/Content");
-
-		_buttonSource = GameUtil.FindChild(_debugCanvas, "Button");
-		_buttonSource.SetActive(false);
-
 		OpenPage(new DebugMainPage());
+		yield break;
 	}
 
 	public void AddButton(string label, System.Action action)
 	{
-		var go = GameObject.Instantiate(_buttonSource);
+		var go = GameObject.Instantiate(_buttonPref);
 		_buttonList.Add(go);
 
 		var text = go.GetComponentInChildren<Text>();
 		text.text = label;
 
 		go.SetActive(true);
-		go.transform.SetParent(_listContent.transform, false);
+		go.transform.SetParent(_viewContent.transform, false);
 
 		var button = go.GetComponent<Button>();
 		button.onClick.AddListener(() => { action(); });
@@ -73,7 +68,7 @@ public class DebugManager : ManagerBase
 		_debugCanvas.SetActive(false);
 	}
 
-	public override void OnUpdate()
+	public override void OnUpdateGame()
 	{
 		if (Input.GetMouseButtonDown(1))
 		{
@@ -97,8 +92,12 @@ public class DebugManager : ManagerBase
 	List<DebugPage> _history = new List<DebugPage>();
 	List<GameObject> _buttonList = new List<GameObject>();
 
+	[SerializeField]
 	GameObject _debugCanvas = null;
 
-	GameObject _buttonSource = null;
-	GameObject _listContent = null;
+	[SerializeField]
+	GameObject _buttonPref = null;
+
+	[SerializeField]
+	GameObject _viewContent = null;
 }

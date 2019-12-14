@@ -5,19 +5,15 @@ using UnityEngine.UI;
 
 public class MapManager : ManagerBase
 {
-	public override void Initialize()
+	protected override IEnumerator Setup()
 	{
-		_mapCanvas = GameUtil.GetNamedSceneObject("MapCanvas");
-		_mapCanvas.SetActive(true);
-
 		_mapList = _mapCanvas.GetComponentsInChildren<MapData>();
 		_currentMap = _mapList[0];
-
-		_searchIcon = GameUtil.GetNamedSceneObject("SearchIcon").GetComponent<Image>();
 		_searchIcon.enabled = false;
+		yield break;
 	}
 
-	public override void OnUpdate()
+	public override void OnUpdateGame()
 	{
 		if(_searchIcon.enabled)
 		{
@@ -63,11 +59,16 @@ public class MapManager : ManagerBase
 		}
 	}
 
-
+	[SerializeField]
 	GameObject _mapCanvas = null;
-	MapData[] _mapList;
-	MapData _currentMap = null;
 
-	float _searchTime = 0;
+	[SerializeField]
+	MapData[] _mapList;
+
+	[SerializeField]
 	Image _searchIcon;
+
+
+	MapData _currentMap = null;
+	float _searchTime = 0;
 }
