@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sakura
+  m_Name: 02
   m_Shader: {fileID: 4800000, guid: 1d10c7840eb6ba74c889a27f14ba6081, type: 3}
   m_ShaderKeywords: _ _EMISSIVE_SIMPLE _OUTLINE_NML
   m_LightmapFlags: 4
@@ -122,13 +122,13 @@ Material:
     m_Floats:
     - _1st2nd_Shades_Feather: 0.0001
     - _1st_ShadeColor_Feather: 0.0001
-    - _1st_ShadeColor_Step: 0.5
+    - _1st_ShadeColor_Step: 0
     - _2nd_ShadeColor_Feather: 0.0001
     - _2nd_ShadeColor_Step: 0
     - _Add_Antipodean_RimLight: 0
     - _Ap_RimLight_FeatherOff: 0
     - _Ap_RimLight_Power: 0.1
-    - _BaseColor_Step: 0.5
+    - _BaseColor_Step: 0
     - _BaseShade_Feather: 0.0001
     - _Base_Speed: 0
     - _BlurLevelMatcap: 0
@@ -153,7 +153,7 @@ Material:
     - _Is_BakedNormal: 0
     - _Is_BlendAddToHiColor: 0
     - _Is_BlendAddToMatCap: 1
-    - _Is_BlendBaseColor: 1
+    - _Is_BlendBaseColor: 0
     - _Is_ColorShift: 0
     - _Is_Filter_LightColor: 0
     - _Is_LightColor_1st_Shade: 1
@@ -189,9 +189,9 @@ Material:
     - _Outline_Width: 10
     - _Parallax: 0.02
     - _RimLight: 1
-    - _RimLight_FeatherOff: 0
-    - _RimLight_InsideMask: 0.35
-    - _RimLight_Power: 0.009
+    - _RimLight_FeatherOff: 1
+    - _RimLight_InsideMask: 0.452
+    - _RimLight_Power: 0.1
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -229,6 +229,6 @@ Material:
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 0, g: 0, b: 0, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Outline_Color: {r: 0.1509434, g: 0.032039877, b: 0.032039877, a: 1}
-    - _RimLightColor: {r: 1, g: 0.83919364, b: 0.5990566, a: 1}
+    - _Outline_Color: {r: 1, g: 0.49316806, b: 0.4764151, a: 1}
+    - _RimLightColor: {r: 0.9803251, g: 0.990566, b: 0.71488965, a: 1}
     - _ViewShift: {r: 0, g: 0, b: 0, a: 1}
