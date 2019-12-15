@@ -7,7 +7,7 @@ public class AdventureManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_useItemCanselButton.onClick.AddListener(() =>
+		_useItemDisplay.AddButtonListener(() =>
 		{
 			SetUseItem(null);
 		});
@@ -28,12 +28,12 @@ public class AdventureManager : ManagerBase
 		if (data == null)
 		{
 			_useItemId = ParamItem.ID.Invalid;
-			_useItemDisplayAnimator.SetTrigger("Out");
+			_useItemDisplay.SetAnimationTrigger("Out");
 			return;
 		}
 		_useItemId = data.Id;
-		_useItemNameLabel.text = data.Name;
-		_useItemDisplayAnimator.SetTrigger("In");
+		_useItemDisplay.SetLabelText(data.Name);
+		_useItemDisplay.SetAnimationTrigger("In");
 	}
 
 	public ParamItem.ID GetUseItemId()
@@ -48,14 +48,8 @@ public class AdventureManager : ManagerBase
 	Button _itemMenuButton;
 
 	[SerializeField]
-	Animator _useItemDisplayAnimator;
-
-	[SerializeField]
-	Text _useItemNameLabel;
-
-	[SerializeField]
-	Button _useItemCanselButton;
-
+	GameItem _useItemDisplay;
+	
 
 	ParamItem.ID _useItemId = ParamItem.ID.Invalid;
 }

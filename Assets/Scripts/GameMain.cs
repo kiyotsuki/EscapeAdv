@@ -24,14 +24,8 @@ public class GameMain : MonoBehaviour
 		// Staticアクセスできるようにする
 		Instance = this;
 
-		_managers = new ManagerBase[_managerPrefs.Length];
-		for (int i = 0; i < _managerPrefs.Length; i++)
-		{
-			var go = GameObject.Instantiate(_managerPrefs[i]);
-			go.transform.SetParent(this.transform, false);
-
-			_managers[i] = go.GetComponent<ManagerBase>();
-		}
+		// マネージャを取得
+		_managers = this.GetComponents<ManagerBase>();
 	}
 
 	public void Update()
@@ -88,12 +82,6 @@ public class GameMain : MonoBehaviour
 		return null;
 	}
 	
-
-	// 各マネージャプレハブ
-	[SerializeField]
-	GameObject[] _managerPrefs = null;
-
-
 	// 各マネージャ実体
 	ManagerBase[] _managers = null;
 

@@ -8,6 +8,7 @@ public class DebugManager : ManagerBase
 	protected override IEnumerator Setup()
 	{
 		_debugCanvas.SetActive(true);
+		_buttonSource.SetActive(false);
 
 		OpenPage(new DebugMainPage());
 		yield break;
@@ -15,7 +16,7 @@ public class DebugManager : ManagerBase
 
 	public void AddButton(string label, System.Action action)
 	{
-		var go = GameObject.Instantiate(_buttonPref);
+		var go = GameObject.Instantiate(_buttonSource);
 		_buttonList.Add(go);
 
 		var text = go.GetComponentInChildren<Text>();
@@ -96,7 +97,7 @@ public class DebugManager : ManagerBase
 	GameObject _debugCanvas = null;
 
 	[SerializeField]
-	GameObject _buttonPref = null;
+	GameObject _buttonSource = null;
 
 	[SerializeField]
 	GameObject _viewContent = null;
