@@ -7,6 +7,9 @@ public class InventoryMenu : MenuBase
 {
 	public void Awake()
 	{
+		// ソースは非表示に
+		_menuItemSource.SetActive(false);
+
 		_closeButton.onClick.AddListener(() =>
 		{
 			Close();
@@ -23,13 +26,15 @@ public class InventoryMenu : MenuBase
 		foreach(var item in itemList)
 		{
 			var data = ParamItem.Get(item);
-			var go = GameObject.Instantiate(_menuElementPref);
+			var go = GameObject.Instantiate(_menuItemSource);
 
 			go.SetActive(true);
 			go.transform.SetParent(_viewContent.transform, false);
 
-			var element = go.GetComponent<InventoryMenuElement>();
-			element.Setup(data.Name, ()=>{ checkItem(data); }, ()=> { useItem(data); });
+			var gi = go.GetComponent<GameItem>();
+			gi.AddButtonListener(() => { checkItem(data); }, 0);
+			gi.AddButtonListener(() => { useItem(data); }, 1);
+			gi.SetLabelText(data.Name);
 			
 			_elementObjects.Add(go);
 		}
@@ -55,7 +60,7 @@ public class InventoryMenu : MenuBase
 	private Button _closeButton;
 
 	[SerializeField]
-	private GameObject _menuElementPref;
+	private GameObject _menuItemSource;
 
 	[SerializeField]
 	private GameObject _viewContent;
