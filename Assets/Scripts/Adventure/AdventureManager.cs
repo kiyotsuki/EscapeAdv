@@ -11,7 +11,27 @@ public class AdventureManager : ManagerBase
 		{
 			SetUseItem(null);
 		});
+		_charaChangeButtonL.onClick.AddListener(() =>
+		{
+			_playerIndex -= 1;
+			if (_playerIndex < 0) _playerIndex = 2;
+			requestMove();
+		});
+		_charaChangeButtonR.onClick.AddListener(() =>
+		{
+			_playerIndex += 1;
+			if (_playerIndex > 2) _playerIndex = 0;
+			requestMove();
+		});
+		requestMove();
 		yield break;
+	}
+
+	private void requestMove()
+	{
+		_originRotation = _playerStage.transform.rotation;
+		_targetRotation = Quaternion.Euler(0, _playerIndex * 120 + 180, 0);
+		_rotationTime = 0;
 	}
 
 	public override void OnStartGame()
@@ -41,6 +61,20 @@ public class AdventureManager : ManagerBase
 		return _useItemId;
 	}
 
+	public override void OnUpdateGame()
+	{
+		if (_rotationTime >= 0)
+		{
+			_rotationTime += Time.deltaTime;
+			var rate = _rotationTime / 0.3f;
+			_playerStage.transform.rotation = Quaternion.Slerp(_originRotation, _targetRotation, rate);
+			if(rate > 1)
+			{
+				_rotationTime = -1;
+			}
+		}
+	}
+
 	[SerializeField]
 	GameObject _hudCanvas;
 
@@ -48,8 +82,22 @@ public class AdventureManager : ManagerBase
 	Button _itemMenuButton;
 
 	[SerializeField]
-	GameItem _useItemDisplay;
-	
+	Button _charaChangeButtonL;
 
+	[SerializeField]
+	Button _charaChangeButtonR;
+
+	[SerializeField]
+	GameObject _playerStage;
+
+
+	[SerializeField]
+	GameItem _useItemDisplay;
+
+	float _rotationTime = 0;
+	Quaternion _originRotation, _targetRotation;
+
+	int _playerIndex = 0;
+	float _rot;
 	ParamItem.ID _useItemId = ParamItem.ID.Invalid;
 }
