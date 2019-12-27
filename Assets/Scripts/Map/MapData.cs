@@ -22,5 +22,8 @@ public class MapData : MonoBehaviour
 	private Image _image;
 
 	[SerializeField]
+	private string _mapName;
+
+	[SerializeField]
 	private MapEvent[] _events;
 }

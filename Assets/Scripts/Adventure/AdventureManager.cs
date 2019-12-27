@@ -13,25 +13,50 @@ public class AdventureManager : ManagerBase
 		});
 		_charaChangeButtonL.onClick.AddListener(() =>
 		{
-			_playerIndex -= 1;
-			if (_playerIndex < 0) _playerIndex = 2;
-			requestMove();
+			setNextPlayer(1);
 		});
 		_charaChangeButtonR.onClick.AddListener(() =>
 		{
-			_playerIndex += 1;
-			if (_playerIndex > 2) _playerIndex = 0;
-			requestMove();
+			setNextPlayer(-1);
 		});
-		requestMove();
+
+		for (int i = 0; i < PLAYER_NUM; i++)
+		{
+			_playerActives[i] = true;
+			_playerItems[i] = new List<ParamItem.ID>();
+		}
+
+		SetCurrentPlayer(ParamPlayer.ID.Momoka);
 		yield break;
 	}
 
-	private void requestMove()
+	private void setNextPlayer(int dir)
 	{
-		_originRotation = _playerStage.transform.rotation;
-		_targetRotation = Quaternion.Euler(0, _playerIndex * 120 + 180, 0);
-		_rotationTime = 0;
+		var current = (int)_currentPlayer;
+		for (int i = 0; i < PLAYER_NUM - 1; i++)
+		{
+			current = (current + dir) % PLAYER_NUM;
+			if (current < 0) current += PLAYER_NUM;
+			if (_playerActives[current])
+			{
+				SetCurrentPlayer((ParamPlayer.ID)current);
+				return;
+			}
+		}
+	}
+
+	public void SetCurrentPlayer(ParamPlayer.ID id)
+	{
+		_currentPlayer = id;
+		var data = ParamPlayer.Get(id);
+		_playerName.text = data.Name;
+		SetUseItem(null);
+
+		for (int i = 0; i < PLAYER_NUM; i++)
+		{
+			var go = _playerLocationA[i];
+			_players[((int)_currentPlayer + i) % PLAYER_NUM].SetTargetTransform(go.transform);
+		}
 	}
 
 	public override void OnStartGame()
@@ -56,27 +81,41 @@ public class AdventureManager : ManagerBase
 		_useItemDisplay.SetAnimationTrigger("In");
 	}
 
-	public ParamItem.ID GetUseItemId()
+	public ParamItem.ID GetUseItem()
 	{
 		return _useItemId;
 	}
 
-	public override void OnUpdateGame()
+	public void SetPlayerActive(ParamPlayer.ID id, bool active)
 	{
-		if (_rotationTime >= 0)
-		{
-			_rotationTime += Time.deltaTime;
-			var rate = _rotationTime / 0.3f;
-			_playerStage.transform.rotation = Quaternion.Slerp(_originRotation, _targetRotation, rate);
-			if(rate > 1)
-			{
-				_rotationTime = -1;
-			}
-		}
+		_playerActives[(int)id] = active;
 	}
+
+	public List<ParamItem.ID> GetPlayerItems(ParamPlayer.ID player = ParamPlayer.ID.Invalid)
+	{
+		if(player == ParamPlayer.ID.Invalid)
+		{
+			player = _currentPlayer;
+		}
+		return _playerItems[(int)player];
+	}
+
+	public void AddPlayerItem(ParamItem.ID item, ParamPlayer.ID player = ParamPlayer.ID.Invalid)
+	{
+		if (player == ParamPlayer.ID.Invalid)
+		{
+			player = _currentPlayer;
+		}
+		_playerItems[(int)player].Add(item);
+	}
+
+
 
 	[SerializeField]
 	GameObject _hudCanvas;
+
+	[SerializeField]
+	TouchPanel _mapTouchPanel;
 
 	[SerializeField]
 	Button _itemMenuButton;
@@ -88,16 +127,23 @@ public class AdventureManager : ManagerBase
 	Button _charaChangeButtonR;
 
 	[SerializeField]
-	GameObject _playerStage;
-
+	Text _playerName;
 
 	[SerializeField]
 	GameItem _useItemDisplay;
 
-	float _rotationTime = 0;
-	Quaternion _originRotation, _targetRotation;
+	[SerializeField]
+	PlayerController[] _players;
 
-	int _playerIndex = 0;
-	float _rot;
+	[SerializeField]
+	GameObject[] _playerLocationA, playerLocationB;
+
+
+	const int PLAYER_NUM = 3;
+
+	bool[] _playerActives = new bool[PLAYER_NUM];
+	List<ParamItem.ID>[] _playerItems = new List<ParamItem.ID>[PLAYER_NUM];
+
 	ParamItem.ID _useItemId = ParamItem.ID.Invalid;
+	ParamPlayer.ID _currentPlayer = ParamPlayer.ID.Momoka;
 }

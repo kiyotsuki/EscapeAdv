@@ -26,6 +26,11 @@ public class GameItem : MonoBehaviour
 		_animators[index].SetTrigger(trigger);
 	}
 
+	public void SetActive(bool flag)
+	{
+		gameObject.SetActive(flag);
+	}
+
 	[SerializeField]
 	private Animator[] _animators;
 

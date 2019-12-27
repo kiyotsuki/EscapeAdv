@@ -72,12 +72,7 @@ public class TalkWindow : MonoBehaviour
 		}
 		_isTalking = false;
 	}
-
-	public void SetName(string name)
-	{
-		_speakerName.text = name;
-	}
-
+	
 	/// <summary>
 	/// 会話の表示を開始する
 	/// テキスト欄をリセットしてメッセージの表示を開始する
@@ -134,9 +129,6 @@ public class TalkWindow : MonoBehaviour
 	float _timer = 0;
 	string _sourceText = "";
 	int _viewLength = 0;
-
-	[SerializeField]
-	Text _speakerName;
 
 	[SerializeField]
 	Text _talkText;

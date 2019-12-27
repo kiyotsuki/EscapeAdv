@@ -6,7 +6,6 @@ public partial class ScenarioManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_scenarioCanvas.SetActive(false);
 		_talkWindow.Hide();
 		yield break;
 	}
@@ -36,7 +35,6 @@ public partial class ScenarioManager : ManagerBase
 			Debug.LogError("シナリオが見つかりません Scenario=" + scenario);
 			yield break;
 		}
-		_scenarioCanvas.SetActive(true);
 
 		// シナリオ実行開始状態に
 		_running = true;
@@ -55,7 +53,6 @@ public partial class ScenarioManager : ManagerBase
 
 		// トークを隠す
 		_talkWindow.Hide();
-		_scenarioCanvas.SetActive(false);
 
 		_running = false;
 	}
@@ -77,13 +74,9 @@ public partial class ScenarioManager : ManagerBase
 	{
 		return _running;
 	}
-	
-	[SerializeField]
-	GameObject _scenarioCanvas = null;
 
 	[SerializeField]
 	TalkWindow _talkWindow = null;
-
 
 	bool _running = false;
 

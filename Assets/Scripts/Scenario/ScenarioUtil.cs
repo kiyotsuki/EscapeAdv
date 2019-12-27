@@ -44,21 +44,28 @@ public static class ScenarioUtil
 
 	public static void ChangeMap(string name)
 	{
-	}
-
-	public static void SetPlayer(ParamPlayer.ID id, int x, int y)
-	{
+		var manager = GameUtil.GetManager<MapManager>();
+		manager.ChangeMap(name);
 	}
 
 	public static void ChangePlayer(ParamPlayer.ID id)
 	{
+		var adventureManager = GameUtil.GetManager<AdventureManager>();
+		adventureManager.SetCurrentPlayer(id);
 	}
 
+	public static void SetPlayerActives(bool momoka, bool sakura, bool tsubaki)
+	{
+		var adventureManager = GameUtil.GetManager<AdventureManager>();
+		adventureManager.SetPlayerActive(ParamPlayer.ID.Momoka, momoka);
+		adventureManager.SetPlayerActive(ParamPlayer.ID.Sakura, momoka);
+		adventureManager.SetPlayerActive(ParamPlayer.ID.Tsubaki, momoka);
+	}
+	
 	public static IEnumerator StartTalk(string text)
 	{
 		var talkWindow = GetManager().GetTalkWindow();
-
-		talkWindow.SetName("Test");
+		
 		talkWindow.SetText(text);
 
 		return new WaitUntil(() => {
@@ -92,8 +99,9 @@ public static class ScenarioUtil
 		talkWindow.Hide();
 	}
 
-	public static ParamItem.ID GetUseItemId()
+	public static ParamItem.ID GetUseItem()
 	{
-		return GameUtil.GetManager<AdventureManager>().GetUseItemId();
+		var adventureManager = GameUtil.GetManager<AdventureManager>();
+		return adventureManager.GetUseItem();
 	}
 }
