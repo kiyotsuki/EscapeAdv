@@ -1,0 +1,601 @@
+fileFormatVersion: 2
+guid: 7a4b51a333cc77842af38c71493d9c2e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: 03
+    100002: bang.L
+    100004: bang.R
+    100006: bang01.L
+    100008: bang01.L.001
+    100010: bang01.L.001_end
+    100012: bang01.R
+    100014: bang01.R.001
+    100016: bang01.R.001_end
+    100018: breast.L
+    100020: breast.L_end
+    100022: breast.R
+    100024: breast.R_end
+    100026: //RootNode
+    100028: Chest
+    100030: EYE
+    100032: eye.L
+    100034: eye.L.001
+    100036: eye.L.001_end
+    100038: eye.L_end
+    100040: eye.R
+    100042: eye.R.001
+    100044: eye.R.001_end
+    100046: eye.R_end
+    100048: F_H.L
+    100050: F_H.R
+    100052: f_index.01.L
+    100054: f_index.01.L.001
+    100056: f_index.01.L.001_end
+    100058: f_index.01.R
+    100060: f_index.01.R.001
+    100062: f_index.01.R.001_end
+    100064: f_index.02.L
+    100066: f_index.02.R
+    100068: f_index.03.L
+    100070: f_index.03.L_end
+    100072: f_index.03.R
+    100074: f_index.03.R_end
+    100076: f_middle.01.L
+    100078: f_middle.01.L.001
+    100080: f_middle.01.L.001_end
+    100082: f_middle.01.R
+    100084: f_middle.01.R.001
+    100086: f_middle.01.R.001_end
+    100088: f_middle.02.L
+    100090: f_middle.02.R
+    100092: f_middle.03.L
+    100094: f_middle.03.L_end
+    100096: f_middle.03.R
+    100098: f_middle.03.R_end
+    100100: f_pinky.01.L
+    100102: f_pinky.01.L.001
+    100104: f_pinky.01.L.001_end
+    100106: f_pinky.01.R
+    100108: f_pinky.01.R.001
+    100110: f_pinky.01.R.001_end
+    100112: f_pinky.02.L
+    100114: f_pinky.02.R
+    100116: f_pinky.03.L
+    100118: f_pinky.03.L_end
+    100120: f_pinky.03.R
+    100122: f_pinky.03.R_end
+    100124: f_ring.01.L
+    100126: f_ring.01.L.001
+    100128: f_ring.01.L.001_end
+    100130: f_ring.01.R
+    100132: f_ring.01.R.001
+    100134: f_ring.01.R.001_end
+    100136: f_ring.02.L
+    100138: f_ring.02.R
+    100140: f_ring.03.L
+    100142: f_ring.03.L_end
+    100144: f_ring.03.R
+    100146: f_ring.03.R_end
+    100148: foot.L
+    100150: foot.R
+    100152: H_H
+    100154: H_H.L
+    100156: H_H.R
+    100158: Hair.L
+    100160: Hair.R
+    100162: Hair01.L
+    100164: Hair01.R
+    100166: Hair02.L
+    100168: Hair02.L.001
+    100170: Hair02.L.001_end
+    100172: Hair02.L.002
+    100174: Hair02.L.002_end
+    100176: Hair02.R
+    100178: Hair02.R.001
+    100180: Hair02.R.001_end
+    100182: Hair02.R.002
+    100184: Hair02.R.002_end
+    100186: hand.L
+    100188: hand.R
+    100190: Head
+    100192: Head_L
+    100194: Head_L_end
+    100196: Head_R
+    100198: Head_R_end
+    100200: heel.L
+    100202: heel.L_end
+    100204: heel.R
+    100206: heel.R_end
+    100208: Hip
+    100210: Hip_L
+    100212: Hip_L.001
+    100214: Hip_L.001_end
+    100216: Hip_R
+    100218: Hip_R.001
+    100220: Hip_R.001_end
+    100222: Lower Leg.L
+    100224: Lower Leg.L_end
+    100226: Lower Leg.R
+    100228: Lower Leg.R_end
+    100230: Lower_arm.L
+    100232: Lower_arm.L_end
+    100234: Lower_arm.R
+    100236: Lower_arm.R_end
+    100238: Master
+    100240: metarig
+    100242: Neck
+    100244: Neck2
+    100246: palm.01.L
+    100248: palm.01.R
+    100250: palm.02.L
+    100252: palm.02.R
+    100254: palm.03.L
+    100256: palm.03.R
+    100258: palm.04.L
+    100260: palm.04.R
+    100262: R_H
+    100264: S_H
+    100266: shoulder.L
+    100268: shoulder.R
+    100270: skirt_f
+    100272: skirt_f01
+    100274: skirt_f02
+    100276: skirt_f02.001
+    100278: skirt_f02.001_end
+    100280: skirt_f02.002
+    100282: skirt_f02.002_end
+    100284: skirt_f02_end
+    100286: skirt_f_b
+    100288: skirt_f_b01
+    100290: skirt_f_b02
+    100292: skirt_f_b02.001
+    100294: skirt_f_b02.001_end
+    100296: skirt_f_b02.002
+    100298: skirt_f_b02.002_end
+    100300: skirt_f_b02_end
+    100302: skirt_s.L
+    100304: skirt_s.L.001
+    100306: skirt_s.L.001_end
+    100308: skirt_s.R
+    100310: skirt_s.R.001
+    100312: skirt_s.R.001_end
+    100314: skirt_s01.L
+    100316: skirt_s01.L.001
+    100318: skirt_s01.L.001_end
+    100320: skirt_s01.L_end
+    100322: skirt_s01.R
+    100324: skirt_s01.R.001
+    100326: skirt_s01.R.001_end
+    100328: skirt_s01.R_end
+    100330: spine
+    100332: thumb.01.L
+    100334: thumb.01.L.001
+    100336: thumb.01.L.001_end
+    100338: thumb.01.R
+    100340: thumb.01.R.001
+    100342: thumb.01.R.001_end
+    100344: thumb.02.L
+    100346: thumb.02.R
+    100348: thumb.03.L
+    100350: thumb.03.L_end
+    100352: thumb.03.R
+    100354: thumb.03.R_end
+    100356: toe.L
+    100358: toe.L_end
+    100360: toe.R
+    100362: toe.R_end
+    100364: Upper Chest
+    100366: Upper Chest_L
+    100368: Upper Chest_L.001
+    100370: Upper Chest_L.002
+    100372: Upper Chest_L.002_end
+    100374: Upper Chest_L.003
+    100376: Upper Chest_L.003_end
+    100378: Upper Chest_R
+    100380: Upper Chest_R.001
+    100382: Upper Chest_R.002
+    100384: Upper Chest_R.002_end
+    100386: Upper Chest_R.003
+    100388: Upper Chest_R.003_end
+    100390: Upper Leg.L
+    100392: Upper Leg.L.001
+    100394: Upper Leg.L.001_end
+    100396: Upper Leg.R
+    100398: Upper Leg.R.001
+    100400: Upper Leg.R.001_end
+    100402: upper_arm.L
+    100404: upper_arm.L.001
+    100406: upper_arm.L.001_end
+    100408: upper_arm.R
+    100410: upper_arm.R.001
+    100412: upper_arm.R.001_end
+    400000: 03
+    400002: bang.L
+    400004: bang.R
+    400006: bang01.L
+    400008: bang01.L.001
+    400010: bang01.L.001_end
+    400012: bang01.R
+    400014: bang01.R.001
+    400016: bang01.R.001_end
+    400018: breast.L
+    400020: breast.L_end
+    400022: breast.R
+    400024: breast.R_end
+    400026: //RootNode
+    400028: Chest
+    400030: EYE
+    400032: eye.L
+    400034: eye.L.001
+    400036: eye.L.001_end
+    400038: eye.L_end
+    400040: eye.R
+    400042: eye.R.001
+    400044: eye.R.001_end
+    400046: eye.R_end
+    400048: F_H.L
+    400050: F_H.R
+    400052: f_index.01.L
+    400054: f_index.01.L.001
+    400056: f_index.01.L.001_end
+    400058: f_index.01.R
+    400060: f_index.01.R.001
+    400062: f_index.01.R.001_end
+    400064: f_index.02.L
+    400066: f_index.02.R
+    400068: f_index.03.L
+    400070: f_index.03.L_end
+    400072: f_index.03.R
+    400074: f_index.03.R_end
+    400076: f_middle.01.L
+    400078: f_middle.01.L.001
+    400080: f_middle.01.L.001_end
+    400082: f_middle.01.R
+    400084: f_middle.01.R.001
+    400086: f_middle.01.R.001_end
+    400088: f_middle.02.L
+    400090: f_middle.02.R
+    400092: f_middle.03.L
+    400094: f_middle.03.L_end
+    400096: f_middle.03.R
+    400098: f_middle.03.R_end
+    400100: f_pinky.01.L
+    400102: f_pinky.01.L.001
+    400104: f_pinky.01.L.001_end
+    400106: f_pinky.01.R
+    400108: f_pinky.01.R.001
+    400110: f_pinky.01.R.001_end
+    400112: f_pinky.02.L
+    400114: f_pinky.02.R
+    400116: f_pinky.03.L
+    400118: f_pinky.03.L_end
+    400120: f_pinky.03.R
+    400122: f_pinky.03.R_end
+    400124: f_ring.01.L
+    400126: f_ring.01.L.001
+    400128: f_ring.01.L.001_end
+    400130: f_ring.01.R
+    400132: f_ring.01.R.001
+    400134: f_ring.01.R.001_end
+    400136: f_ring.02.L
+    400138: f_ring.02.R
+    400140: f_ring.03.L
+    400142: f_ring.03.L_end
+    400144: f_ring.03.R
+    400146: f_ring.03.R_end
+    400148: foot.L
+    400150: foot.R
+    400152: H_H
+    400154: H_H.L
+    400156: H_H.R
+    400158: Hair.L
+    400160: Hair.R
+    400162: Hair01.L
+    400164: Hair01.R
+    400166: Hair02.L
+    400168: Hair02.L.001
+    400170: Hair02.L.001_end
+    400172: Hair02.L.002
+    400174: Hair02.L.002_end
+    400176: Hair02.R
+    400178: Hair02.R.001
+    400180: Hair02.R.001_end
+    400182: Hair02.R.002
+    400184: Hair02.R.002_end
+    400186: hand.L
+    400188: hand.R
+    400190: Head
+    400192: Head_L
+    400194: Head_L_end
+    400196: Head_R
+    400198: Head_R_end
+    400200: heel.L
+    400202: heel.L_end
+    400204: heel.R
+    400206: heel.R_end
+    400208: Hip
+    400210: Hip_L
+    400212: Hip_L.001
+    400214: Hip_L.001_end
+    400216: Hip_R
+    400218: Hip_R.001
+    400220: Hip_R.001_end
+    400222: Lower Leg.L
+    400224: Lower Leg.L_end
+    400226: Lower Leg.R
+    400228: Lower Leg.R_end
+    400230: Lower_arm.L
+    400232: Lower_arm.L_end
+    400234: Lower_arm.R
+    400236: Lower_arm.R_end
+    400238: Master
+    400240: metarig
+    400242: Neck
+    400244: Neck2
+    400246: palm.01.L
+    400248: palm.01.R
+    400250: palm.02.L
+    400252: palm.02.R
+    400254: palm.03.L
+    400256: palm.03.R
+    400258: palm.04.L
+    400260: palm.04.R
+    400262: R_H
+    400264: S_H
+    400266: shoulder.L
+    400268: shoulder.R
+    400270: skirt_f
+    400272: skirt_f01
+    400274: skirt_f02
+    400276: skirt_f02.001
+    400278: skirt_f02.001_end
+    400280: skirt_f02.002
+    400282: skirt_f02.002_end
+    400284: skirt_f02_end
+    400286: skirt_f_b
+    400288: skirt_f_b01
+    400290: skirt_f_b02
+    400292: skirt_f_b02.001
+    400294: skirt_f_b02.001_end
+    400296: skirt_f_b02.002
+    400298: skirt_f_b02.002_end
+    400300: skirt_f_b02_end
+    400302: skirt_s.L
+    400304: skirt_s.L.001
+    400306: skirt_s.L.001_end
+    400308: skirt_s.R
+    400310: skirt_s.R.001
+    400312: skirt_s.R.001_end
+    400314: skirt_s01.L
+    400316: skirt_s01.L.001
+    400318: skirt_s01.L.001_end
+    400320: skirt_s01.L_end
+    400322: skirt_s01.R
+    400324: skirt_s01.R.001
+    400326: skirt_s01.R.001_end
+    400328: skirt_s01.R_end
+    400330: spine
+    400332: thumb.01.L
+    400334: thumb.01.L.001
+    400336: thumb.01.L.001_end
+    400338: thumb.01.R
+    400340: thumb.01.R.001
+    400342: thumb.01.R.001_end
+    400344: thumb.02.L
+    400346: thumb.02.R
+    400348: thumb.03.L
+    400350: thumb.03.L_end
+    400352: thumb.03.R
+    400354: thumb.03.R_end
+    400356: toe.L
+    400358: toe.L_end
+    400360: toe.R
+    400362: toe.R_end
+    400364: Upper Chest
+    400366: Upper Chest_L
+    400368: Upper Chest_L.001
+    400370: Upper Chest_L.002
+    400372: Upper Chest_L.002_end
+    400374: Upper Chest_L.003
+    400376: Upper Chest_L.003_end
+    400378: Upper Chest_R
+    400380: Upper Chest_R.001
+    400382: Upper Chest_R.002
+    400384: Upper Chest_R.002_end
+    400386: Upper Chest_R.003
+    400388: Upper Chest_R.003_end
+    400390: Upper Leg.L
+    400392: Upper Leg.L.001
+    400394: Upper Leg.L.001_end
+    400396: Upper Leg.R
+    400398: Upper Leg.R.001
+    400400: Upper Leg.R.001_end
+    400402: upper_arm.L
+    400404: upper_arm.L.001
+    400406: upper_arm.L.001_end
+    400408: upper_arm.R
+    400410: upper_arm.R.001
+    400412: upper_arm.R.001_end
+    2100000: 03
+    4300000: 03
+    7400000: 03|idle
+    7400002: metarig|idle
+    7400004: metarig|search
+    9500000: //RootNode
+    13700000: 03
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 03
+    second: {fileID: 2100000, guid: 0317a5a23d0dbed499f3e8ad31ff3381, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: 03|idle
+      takeName: 03|idle
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|idle
+      takeName: metarig|idle
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: metarig|search
+      takeName: metarig|search
+      firstFrame: 0
+      lastFrame: 89
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
