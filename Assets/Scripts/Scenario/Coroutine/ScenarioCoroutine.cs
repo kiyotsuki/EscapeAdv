@@ -26,24 +26,14 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
-		if (GetUseItem() == ParamItem.ID.Diary)
-		{
-			var adventureManager = GameUtil.GetManager<AdventureManager>();
-			adventureManager.SetUseItem(null);
+		ChangePlayer(ParamPlayer.ID.Momoka);
+		yield return StartTalk("お、何かあるよ！");
 
-			yield return StartTalk("日記を使ったよ！");
-		}
-		else
-		{
-			ChangePlayer(ParamPlayer.ID.Momoka);
-			yield return StartTalk("お、何かあるよ！");
+		ChangePlayer(ParamPlayer.ID.Sakura);
+		yield return StartTalk("どれどれ、見せてみなさい？");
 
-			ChangePlayer(ParamPlayer.ID.Sakura);
-			yield return StartTalk("どれどれ、見せてみなさい？");
-
-			ChangePlayer(ParamPlayer.ID.Tsubaki);
-			yield return StartTalk("何かわかりましたか？");
-		}
+		ChangePlayer(ParamPlayer.ID.Tsubaki);
+		yield return StartTalk("何かわかりましたか？");
 	}
 
 	public static IEnumerator NotFound()
@@ -55,5 +45,10 @@ public partial class ScenarioCoroutine
 	public static IEnumerator CheckItem_Key()
 	{
 		yield return StartTalk("これは・・・鍵だね！");
+	}
+
+	public static IEnumerator UseItem_Key()
+	{
+		yield return StartTalk("鍵をつかったよ");
 	}
 }

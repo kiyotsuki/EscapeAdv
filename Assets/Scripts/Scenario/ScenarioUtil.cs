@@ -1,25 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameUtil;
 
 /// <summary>
 /// シナリオユーティリティ
 /// </summary>
 public static class ScenarioUtil
 {
-	public static ScenarioManager GetManager()
-	{
-		return GameUtil.GetManager<ScenarioManager>();
-	}
-
 	public static void ExecuteScenario(string scenario)
 	{
-		GetManager().ExecuteScenario(scenario);
+		GetManager<ScenarioManager>().ExecuteScenario(scenario);
 	}
 
 	public static bool IsInScenario()
 	{
-		return GetManager().IsRunning();
+		return GetManager<ScenarioManager>().IsRunning();
 	}
 
 	public static IEnumerator FadeIn(float time = 0.3f)
@@ -64,7 +60,7 @@ public static class ScenarioUtil
 	
 	public static IEnumerator StartTalk(string text)
 	{
-		var talkWindow = GetManager().GetTalkWindow();
+		var talkWindow = GetManager<ScenarioManager>().GetTalkWindow();
 		
 		talkWindow.SetText(text);
 
@@ -80,7 +76,7 @@ public static class ScenarioUtil
 
 	public static IEnumerator AddTalk(string text)
 	{
-		var talkWindow = GetManager().GetTalkWindow();
+		var talkWindow = GetManager<ScenarioManager>().GetTalkWindow();
 		talkWindow.AddText(text);
 
 		return new WaitUntil(() => {
@@ -95,13 +91,7 @@ public static class ScenarioUtil
 
 	public static void HideTalk()
 	{
-		var talkWindow = GetManager().GetTalkWindow();
+		var talkWindow = GetManager<ScenarioManager>().GetTalkWindow();
 		talkWindow.Hide();
-	}
-
-	public static ParamItem.ID GetUseItem()
-	{
-		var adventureManager = GameUtil.GetManager<AdventureManager>();
-		return adventureManager.GetUseItem();
 	}
 }

@@ -7,29 +7,52 @@ public class MenuManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		var go = GameObject.Instantiate(_inventoryMenuPref);
-		go.transform.SetParent(_menuCanvas.transform, false);
-
-		_inventoryMenu = go.GetComponent<InventoryMenu>();
+		_menuFade.AddButtonListener(onClickBackScreen);
 		yield break;
 	}
-
-	public void OpenInventoryMenu()
+	
+	public void OpenItemDialog(ParamItem.ID item)
 	{
-		var list = new List<ParamItem.ID>();
-		for (int i = 0; i < ParamItem.Count; i++)
+		_itemDialog.Setup(item);
+		_itemDialog.Open();
+		_currentDialog = _itemDialog;
+	}
+
+	private void onClickBackScreen()
+	{
+		if (_currentDialog != null)
 		{
-			list.Add((ParamItem.ID)i);
+			_currentDialog.Close();
+			_currentDialog = null;
 		}
-		_inventoryMenu.Setup(list);
-		_inventoryMenu.Open();
+	}
+
+	public void AddBackScreen()
+	{
+		if(_screenCount == 0)
+		{
+			_menuFade.In();
+		}
+		_screenCount++;
+	}
+
+	public void RemoveBackScreen()
+	{
+		_screenCount--;
+		if(_screenCount <= 0)
+		{
+			_screenCount = 0;
+			_menuFade.Out();
+		}
 	}
 
 	[SerializeField]
-	GameObject _menuCanvas = null;
+	GameItem _menuFade;
 
 	[SerializeField]
-	GameObject _inventoryMenuPref = null;
+	ItemDialog _itemDialog;
 
-	InventoryMenu _inventoryMenu = null;
+	DialogBase _currentDialog;
+
+	int _screenCount = 0;
 }

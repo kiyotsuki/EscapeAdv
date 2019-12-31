@@ -50,7 +50,7 @@ public class InventoryMenu : MenuBase
 	private void useItem(ParamItem.Data data)
 	{
 		var adventureManager = GameUtil.GetManager<AdventureManager>();
-		adventureManager.SetUseItem(data);
+		//adventureManager.SetUseItem(data);
 
 		Close();
 	}

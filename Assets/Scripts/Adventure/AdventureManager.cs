@@ -7,10 +7,6 @@ public class AdventureManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_useItemDisplay.AddButtonListener(() =>
-		{
-			SetUseItem(null);
-		});
 		_charaChangeButtonL.onClick.AddListener(() =>
 		{
 			setNextPlayer(1);
@@ -25,6 +21,16 @@ public class AdventureManager : ManagerBase
 			_playerActives[i] = true;
 			_playerItems[i] = new List<ParamItem.ID>();
 		}
+
+
+		// プレイヤーの初期アイテム
+		_playerItems[0].Add(ParamItem.ID.Diary);
+		_playerItems[0].Add(ParamItem.ID.Dummy);
+
+		_playerItems[1].Add(ParamItem.ID.Key);
+
+		_playerItems[2].Add(ParamItem.ID.Light);
+
 
 		SetCurrentPlayer(ParamPlayer.ID.Momoka);
 		yield break;
@@ -50,42 +56,25 @@ public class AdventureManager : ManagerBase
 		_currentPlayer = id;
 		var data = ParamPlayer.Get(id);
 		_playerName.text = data.Name;
-		SetUseItem(null);
 
 		for (int i = 0; i < PLAYER_NUM; i++)
 		{
 			var go = _playerLocationA[i];
 			_players[((int)_currentPlayer + i) % PLAYER_NUM].SetTargetTransform(go.transform);
 		}
+
+		_itemWindow.ResetItem();
+		foreach(var item in _playerItems[(int)id])
+		{
+			_itemWindow.AddItem(item);
+		}
+		_itemWindow.SetAnimationTrigger("In");
 	}
 
 	public override void OnStartGame()
 	{
-		_itemMenuButton.onClick.AddListener(() =>
-		{
-			var menuManager = GameUtil.GetManager<MenuManager>();
-			menuManager.OpenInventoryMenu();
-		});
 	}
-
-	public void SetUseItem(ParamItem.Data data)
-	{
-		if (data == null)
-		{
-			_useItemId = ParamItem.ID.Invalid;
-			_useItemDisplay.SetAnimationTrigger("Out");
-			return;
-		}
-		_useItemId = data.Id;
-		_useItemDisplay.SetLabelText(data.Name);
-		_useItemDisplay.SetAnimationTrigger("In");
-	}
-
-	public ParamItem.ID GetUseItem()
-	{
-		return _useItemId;
-	}
-
+	
 	public void SetPlayerActive(ParamPlayer.ID id, bool active)
 	{
 		_playerActives[(int)id] = active;
@@ -130,20 +119,18 @@ public class AdventureManager : ManagerBase
 	Text _playerName;
 
 	[SerializeField]
-	GameItem _useItemDisplay;
-
-	[SerializeField]
 	PlayerController[] _players;
 
 	[SerializeField]
 	GameObject[] _playerLocationA, playerLocationB;
 
+	[SerializeField]
+	ItemWindow _itemWindow;
 
 	const int PLAYER_NUM = 3;
 
 	bool[] _playerActives = new bool[PLAYER_NUM];
 	List<ParamItem.ID>[] _playerItems = new List<ParamItem.ID>[PLAYER_NUM];
-
-	ParamItem.ID _useItemId = ParamItem.ID.Invalid;
+	
 	ParamPlayer.ID _currentPlayer = ParamPlayer.ID.Momoka;
 }
