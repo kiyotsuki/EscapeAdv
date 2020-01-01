@@ -55,35 +55,25 @@ public class GameItem : MonoBehaviour
 
 	public void In(Action onEnd = null)
 	{
-		if (gameObject.activeSelf == false)
-		{
-			gameObject.SetActive(true);
-		}
-		_endInactive = false;
-
 		StartAnimation("In", onEnd);
+		_endInactive = false;
 	}
 
 	public void Out(Action onEnd = null)
 	{
-		_endInactive = true;
-
 		StartAnimation("Out", onEnd);
+		_endInactive = true;
 	}
 
 	public void Play(Action onEnd = null)
 	{
-		_endInactive = gameObject.activeSelf == false;
-		if (gameObject.activeSelf == false)
-		{
-			gameObject.SetActive(true);
-		}
+		var preActive = gameObject.activeSelf;
 		StartAnimation("Play", onEnd);
+		_endInactive = preActive == false;
 	}
 
 	public void StartAnimation(string trigger, Action onEnd = null)
 	{
-		resetStatus();
 		if (gameObject.activeSelf == false)
 		{
 			gameObject.SetActive(true);
