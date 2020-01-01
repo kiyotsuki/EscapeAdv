@@ -7,8 +7,6 @@ public class FadeManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_fadeCanvas.SetActive(true);
-
 		// 最初は真っ暗にしておく
 		//FadeOut(0);
 		// とりあえずデバッグ用に開ける
@@ -54,14 +52,14 @@ public class FadeManager : ManagerBase
 		if (state == FadeState.FadeIn)
 		{
 			// レイキャストブロックを解除
-			_graphicRaycaster.enabled = false;
+			MenuUtil.RemoveTouchFilter();
 		}
 	}
 
 	private void startFade(FadeState state, float time)
 	{
 		// 全てのオブジェクトへのレイキャストをブロック
-		_graphicRaycaster.enabled = true;
+		MenuUtil.AddTouchFilter();
 
 		if (time == 0)
 		{
@@ -118,16 +116,9 @@ public class FadeManager : ManagerBase
 		return _fadeColor.a == 0;
 	}
 
-
-	[SerializeField]
-	GameObject _fadeCanvas = null;
-
 	[SerializeField]
 	Image _fadeImage = null;
-
-	[SerializeField]
-	GraphicRaycaster _graphicRaycaster = null;
-
+	
 	enum FadeState
 	{
 		None,

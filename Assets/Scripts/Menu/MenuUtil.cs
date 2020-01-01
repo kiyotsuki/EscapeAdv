@@ -17,4 +17,14 @@ public static class MenuUtil
 	{
 		GetManager<MenuManager>().RemoveBackScreen();
 	}
+
+	public static void AddTouchFilter()
+	{
+		GetManager<MenuManager>().AddTouchFilter();
+	}
+
+	public static void RemoveTouchFilter()
+	{
+		GetManager<MenuManager>().RemoveTouchFilter();
+	}
 }

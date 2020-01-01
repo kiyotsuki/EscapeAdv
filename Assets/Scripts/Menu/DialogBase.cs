@@ -4,18 +4,35 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class DialogBase : GameItem
 {
-	public void Open(Action onEnd = null)
+	public void Open()
 	{
 		MenuUtil.AddBackScreen();
-		In(onEnd);
+		In();
 	}
 
-	public void Close(Action onEnd = null)
+	public void Close()
 	{
 		MenuUtil.RemoveBackScreen();
-		Out(onEnd);
+		Out();
+	}
+
+	public void Decide(Action onDecide)
+	{
+		MenuUtil.RemoveBackScreen();
+		Out(onDecide);
+	}
+
+	protected override void OnStartAnimation()
+	{
+		MenuUtil.AddTouchFilter();
+	}
+
+	protected override void OnEndAnimation()
+	{
+		MenuUtil.RemoveTouchFilter();
 	}
 }

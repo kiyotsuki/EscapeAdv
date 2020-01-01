@@ -8,6 +8,7 @@ public class MenuManager : ManagerBase
 	protected override IEnumerator Setup()
 	{
 		_menuFade.AddButtonListener(onClickBackScreen);
+		_filterRaycaster.enabled = false;
 		yield break;
 	}
 	
@@ -29,21 +30,38 @@ public class MenuManager : ManagerBase
 
 	public void AddBackScreen()
 	{
-		if(_screenCount == 0)
+		if(_backScreenCount == 0)
 		{
 			_menuFade.In();
 		}
-		_screenCount++;
+		_backScreenCount++;
 	}
 
 	public void RemoveBackScreen()
 	{
-		_screenCount--;
-		if(_screenCount <= 0)
+		if(_backScreenCount == 1)
 		{
-			_screenCount = 0;
 			_menuFade.Out();
 		}
+		_backScreenCount--;
+	}
+
+	public void AddTouchFilter()
+	{
+		if(_touchFilterCount == 0)
+		{
+			_filterRaycaster.enabled = true;
+		}
+		_touchFilterCount++;
+	}
+
+	public void RemoveTouchFilter()
+	{
+		if (_touchFilterCount == 1)
+		{
+			_filterRaycaster.enabled = false;
+		}
+		_touchFilterCount--;
 	}
 
 	[SerializeField]
@@ -52,7 +70,11 @@ public class MenuManager : ManagerBase
 	[SerializeField]
 	ItemDialog _itemDialog;
 
+	[SerializeField]
+	GraphicRaycaster _filterRaycaster;
+
 	DialogBase _currentDialog;
 
-	int _screenCount = 0;
+	int _backScreenCount = 0;
+	int _touchFilterCount = 0;
 }

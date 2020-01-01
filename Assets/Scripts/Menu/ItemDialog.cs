@@ -24,7 +24,7 @@ public class ItemDialog : DialogBase
 
 	private void onClickCheck()
 	{
-		Close(() =>
+		Decide(() =>
 		{
 			ScenarioUtil.ExecuteScenario("CheckItem_" + _item);
 		});
@@ -32,7 +32,7 @@ public class ItemDialog : DialogBase
 
 	private void onClickUse()
 	{
-		Close(() =>
+		Decide(() =>
 		{
 			ScenarioUtil.ExecuteScenario("UseItem_" + _item);
 		});
