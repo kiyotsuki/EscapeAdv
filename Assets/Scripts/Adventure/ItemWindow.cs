@@ -28,7 +28,7 @@ public class ItemWindow : MonoBehaviour
 	private void onClickItem(ParamItem.ID item)
 	{
 		var menuManager = GameUtil.GetManager<MenuManager>();
-		menuManager.OpenItemDialog(item);
+		menuManager.OpenItemUseDialog(item);
 	}
 
 	public void SetAnimationTrigger(string trigger)

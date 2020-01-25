@@ -16,10 +16,29 @@ public class AdventureManager : ManagerBase
 			setNextPlayer(-1);
 		});
 
+		_saveButton.onClick.AddListener(() =>
+		{
+			GameUtil.GetManager<MenuManager>().OpenYesNoDialog("現在の状況を保存しますか？", ()=>
+			{
+				GameUtil.GetManager<MenuManager>().OpenOkDialog("保存しました");
+			});
+		});
+
+		_loadButton.onClick.AddListener(() =>
+		{
+			GameUtil.GetManager<MenuManager>().OpenSaveDialog();
+		});
+
+		_optionButton.onClick.AddListener(() =>
+		{
+			GameUtil.GetManager<MenuManager>().OpenOkDialog("工事中");
+		});
+
 		for (int i = 0; i < PLAYER_NUM; i++)
 		{
 			_playerActives[i] = true;
 			_playerItems[i] = new List<ParamItem.ID>();
+			_players[i].SetActive(true);
 		}
 
 
@@ -102,12 +121,9 @@ public class AdventureManager : ManagerBase
 
 	[SerializeField]
 	GameObject _hudCanvas;
-
+	
 	[SerializeField]
-	TouchPanel _mapTouchPanel;
-
-	[SerializeField]
-	Button _itemMenuButton;
+	Button _saveButton, _loadButton, _optionButton;
 
 	[SerializeField]
 	Button _charaChangeButtonL;

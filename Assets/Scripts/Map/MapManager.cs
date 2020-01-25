@@ -30,7 +30,7 @@ public class MapManager : ManagerBase
 	{
 		if(_isSearchStart)
 		{
-			if (_touchPanel.PressTime > 3.0)
+			if (_touchPanel.PressTime > 1.0F)
 			{
 				_isSearchStart = false;
 				_searchIcon.SetActive(false);

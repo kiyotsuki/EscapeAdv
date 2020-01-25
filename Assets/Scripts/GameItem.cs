@@ -11,6 +11,7 @@ public class GameItem : MonoBehaviour
 	public void Awake()
 	{
 		_animator = GetComponent<Animator>();
+		_animator.Play("");
 	}
 
 	private void resetStatus()
@@ -35,7 +36,6 @@ public class GameItem : MonoBehaviour
 		resetStatus();
 		gameObject.SetActive(flag);
 	}
-
 
 	public void AddButtonListener(UnityAction action, int index = 0)
 	{
@@ -133,13 +133,13 @@ public class GameItem : MonoBehaviour
 	}
 
 	[SerializeField]
-	private Button[] _buttons;
+	protected Button[] _buttons;
 
 	[SerializeField]
-	private Text[] _labels;
+	protected Text[] _labels;
 
 	[SerializeField]
-	private Image[] _images;
+	protected Image[] _images;
 
 	Animator _animator = null;
 	Action _onEndCallback = null;

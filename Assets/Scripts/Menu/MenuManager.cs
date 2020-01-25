@@ -2,35 +2,62 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class MenuManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
-		_menuFade.AddButtonListener(onClickBackScreen);
 		_filterRaycaster.enabled = false;
 		yield break;
 	}
-	
-	public void OpenItemDialog(ParamItem.ID item)
+
+	private DialogFrame getDialogFrame()
 	{
-		_itemDialog.Setup(item);
-		_itemDialog.Open();
-		_currentDialog = _itemDialog;
+		foreach (var frame in _dialogList)
+		{
+			if(frame.gameObject.activeSelf == false)
+			{
+				return frame;
+			}
+		}
+		var dialogFrame = GameUtil.CreateInstance(_dialogFrameSource);
+		_dialogList.Add(dialogFrame);
+		return dialogFrame;
 	}
 
-	private void onClickBackScreen()
+	public void OpenSaveDialog()
 	{
-		if (_currentDialog != null)
-		{
-			_currentDialog.Close();
-			_currentDialog = null;
-		}
 	}
+
+	public void OpenOkDialog(string text, Action onClickOk = null)
+	{
+		var dialogFrame = getDialogFrame();
+		var content = dialogFrame.CreateContent(_simpleDialogSource);
+		content.Setup(text, onClickOk);
+		dialogFrame.Open();
+	}
+
+	public void OpenYesNoDialog(string text, Action onClickYes, Action onClickNo = null)
+	{
+		var dialogFrame = getDialogFrame();
+		var content = dialogFrame.CreateContent(_simpleDialogSource);
+		content.Setup(text, onClickYes, onClickNo);
+		dialogFrame.Open();
+	}
+	
+	public void OpenItemUseDialog(ParamItem.ID item)
+	{
+		var dialogFrame = getDialogFrame();
+		var content = dialogFrame.CreateContent(_itemUseDialogSource);
+		content.Setup(item);
+		dialogFrame.Open();
+	}
+
 
 	public void AddBackScreen()
 	{
-		if(_backScreenCount == 0)
+		if (_backScreenCount == 0)
 		{
 			_menuFade.In();
 		}
@@ -39,7 +66,7 @@ public class MenuManager : ManagerBase
 
 	public void RemoveBackScreen()
 	{
-		if(_backScreenCount == 1)
+		if (_backScreenCount == 1)
 		{
 			_menuFade.Out();
 		}
@@ -48,7 +75,7 @@ public class MenuManager : ManagerBase
 
 	public void AddTouchFilter()
 	{
-		if(_touchFilterCount == 0)
+		if (_touchFilterCount == 0)
 		{
 			_filterRaycaster.enabled = true;
 		}
@@ -66,14 +93,24 @@ public class MenuManager : ManagerBase
 
 	[SerializeField]
 	GameItem _menuFade;
-
+	
 	[SerializeField]
-	ItemDialog _itemDialog;
-
+	SaveDialog _saveDialog;
+	
 	[SerializeField]
 	GraphicRaycaster _filterRaycaster;
 
-	DialogBase _currentDialog;
+	[SerializeField]
+	DialogFrame _dialogFrameSource;
+
+	[SerializeField]
+	SimpleDialog _simpleDialogSource;
+
+	[SerializeField]
+	ItemUseDialog _itemUseDialogSource;
+
+
+	List<DialogFrame> _dialogList = new List<DialogFrame>();
 
 	int _backScreenCount = 0;
 	int _touchFilterCount = 0;
