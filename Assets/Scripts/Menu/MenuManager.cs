@@ -26,10 +26,6 @@ public class MenuManager : ManagerBase
 		return dialogFrame;
 	}
 
-	public void OpenSaveDialog()
-	{
-	}
-
 	public void OpenOkDialog(string text, Action onClickOk = null)
 	{
 		var dialogFrame = getDialogFrame();
@@ -54,6 +50,18 @@ public class MenuManager : ManagerBase
 		dialogFrame.Open();
 	}
 
+	public void OpenSaveLoadDialog()
+	{
+		var saveData = new SaveData[20];
+		for (int i = 0; i < saveData.Length; i++)
+		{
+			saveData[i] = new SaveData(i);
+		}
+		var dialogFrame = getDialogFrame();
+		var content = dialogFrame.CreateContent(_saveLoadDialogSource);
+		content.Setup(saveData);
+		dialogFrame.Open();
+	}
 
 	public void AddBackScreen()
 	{
@@ -95,9 +103,6 @@ public class MenuManager : ManagerBase
 	GameItem _menuFade;
 	
 	[SerializeField]
-	SaveDialog _saveDialog;
-	
-	[SerializeField]
 	GraphicRaycaster _filterRaycaster;
 
 	[SerializeField]
@@ -108,6 +113,9 @@ public class MenuManager : ManagerBase
 
 	[SerializeField]
 	ItemUseDialog _itemUseDialogSource;
+
+	[SerializeField]
+	SaveLoadDialog _saveLoadDialogSource;
 
 
 	List<DialogFrame> _dialogList = new List<DialogFrame>();

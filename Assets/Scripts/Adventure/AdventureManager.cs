@@ -18,15 +18,7 @@ public class AdventureManager : ManagerBase
 
 		_saveButton.onClick.AddListener(() =>
 		{
-			GameUtil.GetManager<MenuManager>().OpenYesNoDialog("現在の状況を保存しますか？", ()=>
-			{
-				GameUtil.GetManager<MenuManager>().OpenOkDialog("保存しました");
-			});
-		});
-
-		_loadButton.onClick.AddListener(() =>
-		{
-			GameUtil.GetManager<MenuManager>().OpenSaveDialog();
+			GameUtil.GetManager<MenuManager>().OpenSaveLoadDialog();
 		});
 
 		_optionButton.onClick.AddListener(() =>
@@ -123,7 +115,7 @@ public class AdventureManager : ManagerBase
 	GameObject _hudCanvas;
 	
 	[SerializeField]
-	Button _saveButton, _loadButton, _optionButton;
+	Button _saveButton, _optionButton;
 
 	[SerializeField]
 	Button _charaChangeButtonL;

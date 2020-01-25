@@ -14,9 +14,9 @@ public class SaveItem : MonoBehaviour
 		_deleteButton.onClick.AddListener(onClickDelete);
 	}
 
-	public void Setup(int slotNo)
+	public void Setup(SaveData data)
 	{
-		Setup(slotNo, $"スロット{slotNo}:データなし", "", "");
+		Setup(data.SlotNo, $"スロット{data.SlotNo}:データなし", "", "");
 		_loadButton.gameObject.SetActive(false);
 		_deleteButton.gameObject.SetActive(false);
 	}

@@ -45,7 +45,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6730849996807702549}
   - component: {fileID: 6730849996807702551}
-  - component: {fileID: 6730849996807702550}
+  - component: {fileID: 3732972171612736946}
   m_Layer: 5
   m_Name: DialogFrame
   m_TagString: Untagged
@@ -93,7 +93,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6730849996807702550
+--- !u!114 &3732972171612736946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,12 +102,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6730849996807702548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad4a6904cb954414bbc8e1072a38d06d, type: 3}
+  m_Script: {fileID: 11500000, guid: 81fa2af9abc67dc488aa635bc5b8c250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _contentRoot: {fileID: 6730849996788127709}
   _backScreen: {fileID: 6730849997686624913}
-  _titleLabel: {fileID: 0}
 --- !u!1 &6730849997686624919
 GameObject:
   m_ObjectHideFlags: 0

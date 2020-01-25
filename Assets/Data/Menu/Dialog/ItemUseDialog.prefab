@@ -211,8 +211,7 @@ GameObject:
   - component: {fileID: 6474523103500030125}
   - component: {fileID: 3182584458754432980}
   - component: {fileID: 859570008892755766}
-  - component: {fileID: 8313961819643547126}
-  - component: {fileID: 6461748629454007457}
+  - component: {fileID: 4207686519385952610}
   m_Layer: 5
   m_Name: ItemUseDialog
   m_TagString: Untagged
@@ -316,26 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!95 &8313961819643547126
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4553992619437513864}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6461748629454007457
+--- !u!114 &4207686519385952610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,7 +324,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4553992619437513864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b80bbfabc25a4b4b8a535992b868b19, type: 3}
+  m_Script: {fileID: 11500000, guid: bab4dd3ec321d6f42b6c491b5224eefb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemName: {fileID: 8501295324360863394}
