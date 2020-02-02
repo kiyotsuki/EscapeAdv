@@ -40,7 +40,6 @@ public class SaveData
 
 	public SaveData()
 	{
-		_charaStatuses[2] = CharaStatus.Inactive;
 	}
 
 	public void SetCharaStatus(ParamCharacter.ID id, CharaStatus status)
