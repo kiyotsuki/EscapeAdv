@@ -8,7 +8,7 @@ public partial class ScenarioCoroutine
 	public static IEnumerator Opening()
 	{
 		ChangeMap("Entrance");
-		ChangePlayer(ParamPlayer.ID.Momoka);
+		ChangePlayer(ParamCharacter.ID.Momoka);
 		yield return FadeIn(3);
 		yield return new WaitForSeconds(1);
 		yield return StartTalk("おぉ～…！");
@@ -17,7 +17,7 @@ public partial class ScenarioCoroutine
 
 		yield return StartTalk("すごーい！\n本物の廃墟だよー！！");
 
-		ChangePlayer(ParamPlayer.ID.Sakura);
+		ChangePlayer(ParamCharacter.ID.Sakura);
 		yield return StartTalk("あーもー\nまた勝手に入って・・・");
 		yield return StartTalk("走ったら危ないでしょ！\nもっと足元とか、周囲に気を付けて・・・");
 		
@@ -26,13 +26,13 @@ public partial class ScenarioCoroutine
 
 	public static IEnumerator TestEvent()
 	{
-		ChangePlayer(ParamPlayer.ID.Momoka);
+		ChangePlayer(ParamCharacter.ID.Momoka);
 		yield return StartTalk("お、何かあるよ！");
 
-		ChangePlayer(ParamPlayer.ID.Sakura);
+		ChangePlayer(ParamCharacter.ID.Sakura);
 		yield return StartTalk("どれどれ、見せてみなさい？");
 
-		ChangePlayer(ParamPlayer.ID.Tsubaki);
+		ChangePlayer(ParamCharacter.ID.Tsubaki);
 		yield return StartTalk("何かわかりましたか？");
 	}
 

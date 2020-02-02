@@ -26,7 +26,7 @@ public class AdventureManager : ManagerBase
 			GameUtil.GetManager<MenuManager>().OpenOkDialog("工事中");
 		});
 
-		for (int i = 0; i < PLAYER_NUM; i++)
+		for (int i = 0; i < ParamCharacter.Count; i++)
 		{
 			_playerActives[i] = true;
 			_playerItems[i] = new List<ParamItem.ID>();
@@ -43,35 +43,35 @@ public class AdventureManager : ManagerBase
 		_playerItems[2].Add(ParamItem.ID.Light);
 
 
-		SetCurrentPlayer(ParamPlayer.ID.Momoka);
+		SetCurrentPlayer(ParamCharacter.ID.Momoka);
 		yield break;
 	}
 
 	private void setNextPlayer(int dir)
 	{
 		var current = (int)_currentPlayer;
-		for (int i = 0; i < PLAYER_NUM - 1; i++)
+		for (int i = 0; i < ParamCharacter.Count - 1; i++)
 		{
-			current = (current + dir) % PLAYER_NUM;
-			if (current < 0) current += PLAYER_NUM;
+			current = (current + dir) % ParamCharacter.Count;
+			if (current < 0) current += ParamCharacter.Count;
 			if (_playerActives[current])
 			{
-				SetCurrentPlayer((ParamPlayer.ID)current);
+				SetCurrentPlayer((ParamCharacter.ID)current);
 				return;
 			}
 		}
 	}
 
-	public void SetCurrentPlayer(ParamPlayer.ID id)
+	public void SetCurrentPlayer(ParamCharacter.ID id)
 	{
 		_currentPlayer = id;
-		var data = ParamPlayer.Get(id);
+		var data = ParamCharacter.Get(id);
 		_playerName.text = data.Name;
 
-		for (int i = 0; i < PLAYER_NUM; i++)
+		for (int i = 0; i < ParamCharacter.Count; i++)
 		{
 			var go = _playerLocationA[i];
-			_players[((int)_currentPlayer + i) % PLAYER_NUM].SetTargetTransform(go.transform);
+			_players[((int)_currentPlayer + i) % ParamCharacter.Count].SetTargetTransform(go.transform);
 		}
 
 		_itemWindow.ResetItem();
@@ -86,30 +86,38 @@ public class AdventureManager : ManagerBase
 	{
 	}
 	
-	public void SetPlayerActive(ParamPlayer.ID id, bool active)
+	public void SetPlayerActive(ParamCharacter.ID id, bool active)
 	{
 		_playerActives[(int)id] = active;
 	}
 
-	public List<ParamItem.ID> GetPlayerItems(ParamPlayer.ID player = ParamPlayer.ID.Invalid)
+	public List<ParamItem.ID> GetPlayerItems(ParamCharacter.ID player = ParamCharacter.ID.Invalid)
 	{
-		if(player == ParamPlayer.ID.Invalid)
+		if(player == ParamCharacter.ID.Invalid)
 		{
 			player = _currentPlayer;
 		}
 		return _playerItems[(int)player];
 	}
 
-	public void AddPlayerItem(ParamItem.ID item, ParamPlayer.ID player = ParamPlayer.ID.Invalid)
+	public void AddPlayerItem(ParamItem.ID item, ParamCharacter.ID player = ParamCharacter.ID.Invalid)
 	{
-		if (player == ParamPlayer.ID.Invalid)
+		if (player == ParamCharacter.ID.Invalid)
 		{
 			player = _currentPlayer;
 		}
 		_playerItems[(int)player].Add(item);
 	}
 
+	public void OnSave(SaveData saveData)
+	{
 
+	}
+
+	public void OnLoad(SaveData saveData)
+	{
+
+	}
 
 	[SerializeField]
 	GameObject _hudCanvas;
@@ -135,10 +143,9 @@ public class AdventureManager : ManagerBase
 	[SerializeField]
 	ItemWindow _itemWindow;
 
-	const int PLAYER_NUM = 3;
 
-	bool[] _playerActives = new bool[PLAYER_NUM];
-	List<ParamItem.ID>[] _playerItems = new List<ParamItem.ID>[PLAYER_NUM];
+	bool[] _playerActives = new bool[ParamCharacter.Count];
+	List<ParamItem.ID>[] _playerItems = new List<ParamItem.ID>[ParamCharacter.Count];
 	
-	ParamPlayer.ID _currentPlayer = ParamPlayer.ID.Momoka;
+	ParamCharacter.ID _currentPlayer = ParamCharacter.ID.Momoka;
 }

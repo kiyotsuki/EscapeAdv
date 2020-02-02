@@ -4,20 +4,28 @@ using UnityEngine.UI;
 
 public class SaveLoadDialog : DialogContentBase
 {
-	private void Start()
+	public void Start()
 	{
-		_itemSource.gameObject.SetActive(false);
+		_closeButton.onClick.AddListener(() =>
+		{
+			Close(null);
+		});
 	}
 
-	public void Setup(SaveData[] saveData)
+	public void Setup()
 	{
-		foreach (var data in saveData)
+		var saveManager = GameUtil.GetManager<SaveManager>();
+
+		for (int i = 0; i < _saveItems.Length; i++)
 		{
-			var item = GameUtil.CreateInstance(_itemSource);
-			item.Setup(data);
+			var saveLabel = saveManager.GetSaveLabel(i);
+			_saveItems[i].Setup(i, saveLabel);
 		}
 	}
+	
+	[SerializeField]
+	private SaveItem[] _saveItems;
 
 	[SerializeField]
-	private SaveItem _itemSource;
+	private Button _closeButton;
 }

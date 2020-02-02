@@ -14,7 +14,7 @@ public class DebugManager : ManagerBase
 		yield break;
 	}
 
-	public void AddButton(string label, System.Action action)
+	public Text AddButton(string label, System.Action action)
 	{
 		var go = GameObject.Instantiate(_buttonSource);
 		_buttonList.Add(go);
@@ -27,6 +27,8 @@ public class DebugManager : ManagerBase
 
 		var button = go.GetComponent<Button>();
 		button.onClick.AddListener(() => { action(); });
+
+		return text;
 	}
 
 	public void OpenPage(DebugPage page)

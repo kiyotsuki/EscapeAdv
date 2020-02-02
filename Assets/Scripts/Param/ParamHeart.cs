@@ -17,6 +17,11 @@ public class ParamHeart
 		Brave = 5,
 	}
 	
+	public static int Count
+	{
+		get { return 6; }
+	}
+	
 	public class Data
 	{
 		public Data(ParamHeart.ID Id, string Name)
@@ -50,8 +55,4 @@ public class ParamHeart
 		return Get((int)id);
 	}
 	
-	public static int Count
-	{
-		get { return data.Length; }
-	}
 }

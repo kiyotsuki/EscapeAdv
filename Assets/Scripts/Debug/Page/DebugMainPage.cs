@@ -10,5 +10,8 @@ public class DebugMainPage : DebugManager.DebugPage
 		manager.AddButton("シナリオ", ()=> {
 			manager.OpenPage(new DebugScenarioPage());
 		});
+		manager.AddButton("フラグ", () => {
+			manager.OpenPage(new DebugSaveFlagPage());
+		});
 	}
 }

@@ -38,6 +38,7 @@ public class ParamScriptBuilder
 		// データ定義から名前を集めてEnumを作成
 		WriteBlock("public enum ID");
 		WriteLine("Invalid = -1,");
+		var enumCount = 0;
 		for (int i = 0; i < dataSources.Count; i++)
 		{
 			var id = dataSources[i][0];
@@ -46,8 +47,15 @@ public class ParamScriptBuilder
 				// 名前がついてない場合はEnumからは除外
 				continue;
 			}
-			WriteLine($"{id} = {i},");
+			WriteLine($"{id} = {enumCount},");
+			enumCount++;
 		}
+		WriteBlockEnd();
+		WriteLine();
+
+		// データ数取得パラメータ
+		WriteBlock("public static int Count");
+		WriteLine("get { return " + enumCount + "; }");
 		WriteBlockEnd();
 
 		// Value定義がある場合はパラメータとGetData定義作成
@@ -75,11 +83,6 @@ public class ParamScriptBuilder
 			WriteLine("return Get((int)id);");
 			WriteBlockEnd();
 			WriteLine();
-
-			// データ数取得パラメータ
-			WriteBlock("public static int Count");
-			WriteLine("get { return data.Length; }");
-			WriteBlockEnd();
 		}
 		WriteBlockEnd();
 

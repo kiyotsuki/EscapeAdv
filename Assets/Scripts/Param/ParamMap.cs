@@ -4,42 +4,36 @@ using UnityEngine;
 /// ゲーム内パラメータ
 /// ParamGeneratorによって自動出力
 /// </summary>
-public class ParamItem
+public class ParamMap
 {
 	public enum ID
 	{
 		Invalid = -1,
-		Dummy = 0,
-		Key = 1,
-		Light = 2,
-		Diary = 3,
+		Test = 0,
 	}
 	
 	public static int Count
 	{
-		get { return 4; }
+		get { return 1; }
 	}
 	
 	public class Data
 	{
-		public Data(ParamItem.ID Id, string Name, string Desc)
+		public Data(ParamMap.ID Id, string Name, string Prefab)
 		{
 			this.Id = Id;
 			this.Name = Name;
-			this.Desc = Desc;
+			this.Prefab = Prefab;
 		}
 		
-		public ParamItem.ID Id { get; }
+		public ParamMap.ID Id { get; }
 		public string Name { get; }
-		public string Desc { get; }
+		public string Prefab { get; }
 	}
 	
 	private static readonly Data[] data = 
 	{
-		new Data((ID)0, "ダミーアイテム", "ダミーのアイテム"),
-		new Data((ID)1, "どこかの鍵", "どこかの鍵。どこかで使える"),
-		new Data((ID)2, "懐中電灯", "非常用の懐中電灯"),
-		new Data((ID)3, "日記", "院長のものと思われる日記帳"),
+		new Data((ID)0, "テストマップ", "TestMap"),
 	};
 	
 	public static Data Get(int id)

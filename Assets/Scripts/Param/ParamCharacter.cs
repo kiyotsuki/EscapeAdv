@@ -4,7 +4,7 @@ using UnityEngine;
 /// ゲーム内パラメータ
 /// ParamGeneratorによって自動出力
 /// </summary>
-public class ParamPlayer
+public class ParamCharacter
 {
 	public enum ID
 	{
@@ -14,9 +14,14 @@ public class ParamPlayer
 		Tsubaki = 2,
 	}
 	
+	public static int Count
+	{
+		get { return 3; }
+	}
+	
 	public class Data
 	{
-		public Data(ParamPlayer.ID Id, string Name, string IconName, string ImageName, ParamHeart.ID InitHeart)
+		public Data(ParamCharacter.ID Id, string Name, string IconName, string ImageName, ParamHeart.ID InitHeart)
 		{
 			this.Id = Id;
 			this.Name = Name;
@@ -25,7 +30,7 @@ public class ParamPlayer
 			this.InitHeart = InitHeart;
 		}
 		
-		public ParamPlayer.ID Id { get; }
+		public ParamCharacter.ID Id { get; }
 		public string Name { get; }
 		public string IconName { get; }
 		public string ImageName { get; }
@@ -50,8 +55,4 @@ public class ParamPlayer
 		return Get((int)id);
 	}
 	
-	public static int Count
-	{
-		get { return data.Length; }
-	}
 }

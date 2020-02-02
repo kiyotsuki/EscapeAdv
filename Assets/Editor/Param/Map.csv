@@ -1,0 +1,6 @@
+変数名,Name,Prefab
+説明,名前,プレハブ名
+型,string,string
+初期値,null,null
+#,,
+Test,テストマップ,TestMap

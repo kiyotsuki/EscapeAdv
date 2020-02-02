@@ -52,14 +52,9 @@ public class MenuManager : ManagerBase
 
 	public void OpenSaveLoadDialog()
 	{
-		var saveData = new SaveData[20];
-		for (int i = 0; i < saveData.Length; i++)
-		{
-			saveData[i] = new SaveData(i);
-		}
 		var dialogFrame = getDialogFrame();
 		var content = dialogFrame.CreateContent(_saveLoadDialogSource);
-		content.Setup(saveData);
+		content.Setup();
 		dialogFrame.Open();
 	}
 

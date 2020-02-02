@@ -44,7 +44,7 @@ public static class ScenarioUtil
 		manager.ChangeMap(name);
 	}
 
-	public static void ChangePlayer(ParamPlayer.ID id)
+	public static void ChangePlayer(ParamCharacter.ID id)
 	{
 		var adventureManager = GameUtil.GetManager<AdventureManager>();
 		adventureManager.SetCurrentPlayer(id);
@@ -53,9 +53,9 @@ public static class ScenarioUtil
 	public static void SetPlayerActives(bool momoka, bool sakura, bool tsubaki)
 	{
 		var adventureManager = GameUtil.GetManager<AdventureManager>();
-		adventureManager.SetPlayerActive(ParamPlayer.ID.Momoka, momoka);
-		adventureManager.SetPlayerActive(ParamPlayer.ID.Sakura, momoka);
-		adventureManager.SetPlayerActive(ParamPlayer.ID.Tsubaki, momoka);
+		adventureManager.SetPlayerActive(ParamCharacter.ID.Momoka, momoka);
+		adventureManager.SetPlayerActive(ParamCharacter.ID.Sakura, momoka);
+		adventureManager.SetPlayerActive(ParamCharacter.ID.Tsubaki, momoka);
 	}
 	
 	public static IEnumerator StartTalk(string text)
