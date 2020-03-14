@@ -503,10 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738b31d4a3c8362428def9c14d1d49ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  _saveItemSource: {fileID: 1488661760}
-  _viewContent: {fileID: 212050552}
-  _saveSlotList: []
 --- !u!95 &52271524
 Animator:
   serializedVersion: 3
@@ -2814,43 +2810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd16ec04e571f17489e27e62cca8d4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  m_Name: 
-  _buttons:
-  - {fileID: 2073899724}
-  - {fileID: 372443200}
-  _labels:
-  - {fileID: 1836262280}
-  - {fileID: 888830150}
-  _images:
-  - {fileID: 1563070531}
-  _animator: {fileID: 0}
-  _animationNormalizedTime: 0
-  _inAnimation: 0
-  _endInactive: 0
-  _item: -1
 --- !u!1 &250664239
 GameObject:
   m_ObjectHideFlags: 0
@@ -6678,8 +6637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _menuFade: {fileID: 1140805447}
   _filterRaycaster: {fileID: 892206490}
-  _dialogFrameSource: {fileID: 3732972171612736946, guid: 00d9190c460c44f4481abcb304d3de9b,
-    type: 3}
+  _dialogFrameSource: {fileID: 1538870881}
   _simpleDialogSource: {fileID: 748546104760668597, guid: 996a26f52e7198d4cb5e373bf1ab5d1c,
     type: 3}
   _itemUseDialogSource: {fileID: 4207686519385952610, guid: d24dc831c502c904fafaa7fa9a9758a1,
@@ -14377,6 +14335,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 720, y: 1280}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1538870881 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3732972171612736946, guid: 00d9190c460c44f4481abcb304d3de9b,
+    type: 3}
+  m_PrefabInstance: {fileID: 598463170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fa2af9abc67dc488aa635bc5b8c250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1539411193
 GameObject:
   m_ObjectHideFlags: 0
