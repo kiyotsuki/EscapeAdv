@@ -97,12 +97,16 @@ public class ParamGenerator
 		var valueInits = headers[3];
 		for (int i = 1; i < valueNames.Length; i++)
 		{
-			if (valueNames[i] == "" || valueTypes[i] == "" || valueInits[i] == "")
+			var name = valueNames[i];
+			var type = valueTypes[i];
+			var init = valueInits[i];
+			if (name == "" || type == "" || init == "")
 			{
-				// 変数名、型、初期値のどれかが空ならスキップ
+				// 変数名、型、初期値のどれかが空ならエラーを出力してスキップ
+				Debug.LogError($"[ParamGenerator] Invalid Header (Name={name}, Type={type}, Init={init})");
 				continue;
 			}
-			var def = new ParamValueDefine(i, valueNames[i], valueTypes[i], valueInits[i]);
+			var def = new ParamValueDefine(i, name, type, init);
 			valueDefines.Add(def);
 		}
 

@@ -28,6 +28,7 @@ public class ParamScriptBuilder
 	public string Build()
 	{
 		WriteLine("using UnityEngine;");
+		WriteLine("using System.Collections.Generic;");
 		WriteLine("");
 		WriteLine("/// <summary>");
 		WriteLine("/// ゲーム内パラメータ");
@@ -37,7 +38,7 @@ public class ParamScriptBuilder
 
 		// データ定義から名前を集めてEnumを作成
 		WriteBlock("public enum ID");
-		WriteLine("Invalid = -1,");
+		WriteLine("NONE = -1,");
 		var enumCount = 0;
 		for (int i = 0; i < dataSources.Count; i++)
 		{
@@ -51,12 +52,7 @@ public class ParamScriptBuilder
 			enumCount++;
 		}
 		WriteBlockEnd();
-		WriteLine();
 
-		// データ数取得パラメータ
-		WriteBlock("public static int Count");
-		WriteLine("get { return " + enumCount + "; }");
-		WriteBlockEnd();
 
 		// Value定義がある場合はパラメータとGetData定義作成
 		if (valueDefines.Count != 0)
@@ -71,18 +67,37 @@ public class ParamScriptBuilder
 			WriteDataArray();
 			WriteLine();
 
-			// データ取得関数
-			WriteBlock("public static Data Get(int id)");
-			WriteLine("if( id < 0 || data.Length <= id ) return null;");
-			WriteLine("return data[id];");
+			// データ数取得パラメータ
+			WriteBlock("public static int Count");
+			WriteLine("get { return data.Length; }");
 			WriteBlockEnd();
 			WriteLine();
 
-			// IDでもアクセスできる版
+			// データ取得関数
 			WriteBlock("public static Data Get(ID id)");
 			WriteLine("return Get((int)id);");
 			WriteBlockEnd();
+
+			WriteBlock("public static Data Get(int index)");
+			WriteLine("if (index < 0 || data.Length <= index) return null;");
+			WriteLine("return data[index];");
+			WriteBlockEnd();
 			WriteLine();
+
+			// データリスト取得関数
+			WriteBlock("public static List<Data> GetList(ID id)");
+			WriteLine("return GetList((int)id);");
+			WriteBlockEnd();
+
+			WriteBlock("public static List<Data> GetList(int index)");
+			WriteLine("if (index < 0 || data.Length <= index) return null;");
+			WriteLine("var list = new List<Data>();");
+			WriteBlock("for (int i = index; i < data.Length; i++)");
+			WriteLine("if (data[i] == null) break;");
+			WriteLine("list.Add(data[i]);");
+			WriteBlockEnd();
+			WriteLine("return list;");
+			WriteBlockEnd();
 		}
 		WriteBlockEnd();
 
@@ -129,11 +144,10 @@ public class ParamScriptBuilder
 	/// </summary>
 	private void WriteDataArray()
 	{
-		// データを下から検索し末尾の空白を除外
-		int count = dataSources.Count;
-		while (count > 0)
+		int count = 0;
+		for (int i = 0; i < dataSources.Count; i++)
 		{
-			var values = dataSources[count - 1];
+			var values = dataSources[i];
 			bool hasValue = false;
 			foreach (var def in valueDefines)
 			{
@@ -143,13 +157,17 @@ public class ParamScriptBuilder
 					break;
 				}
 			}
+
 			if (hasValue)
 			{
-				// 一つでも値が入っていたら終了
-				break;
+				// 値が入ってた場合カウントを更新
+				count = i + 1;
 			}
-			// 空っぽならカウントを下げて再開
-			count -= 1;
+			else
+			{
+				// 全部空っぽだったらソースをnullに
+				dataSources[i] = null;
+			}
 		}
 
 		// データ配列作成
@@ -158,6 +176,12 @@ public class ParamScriptBuilder
 		{
 			var values = dataSources[i];
 			var text = $"(ID){i}";
+			if(values == null)
+			{
+				// ソースがない場所にはnullを入れておく
+				WriteLine($"null,");
+				continue;
+			}
 			foreach (var def in valueDefines)
 			{
 				text += ", ";
@@ -167,7 +191,6 @@ public class ParamScriptBuilder
 		}
 		WriteBlockEnd(true);
 	}
-
 
 	/// <summary>
 	/// コードに一列を追加

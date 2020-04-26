@@ -5,37 +5,29 @@ using System.Collections.Generic;
 /// ゲーム内パラメータ
 /// ParamGeneratorによって自動出力
 /// </summary>
-public class ParamItem
+public class ParamFlag
 {
 	public enum ID
 	{
 		NONE = -1,
-		Dummy = 0,
-		Key = 1,
-		Light = 2,
-		Diary = 3,
+		TEST = 0,
 	}
 	
 	public class Data
 	{
-		public Data(ParamItem.ID Id, string Name, string Desc)
+		public Data(ParamFlag.ID Id, bool InitialValue)
 		{
 			this.Id = Id;
-			this.Name = Name;
-			this.Desc = Desc;
+			this.InitialValue = InitialValue;
 		}
 		
-		public ParamItem.ID Id { get; }
-		public string Name { get; }
-		public string Desc { get; }
+		public ParamFlag.ID Id { get; }
+		public bool InitialValue { get; }
 	}
 	
 	private static readonly Data[] data = 
 	{
-		new Data((ID)0, "ダミーアイテム", "ダミーのアイテム"),
-		new Data((ID)1, "どこかの鍵", "どこかの鍵。どこかで使える"),
-		new Data((ID)2, "懐中電灯", "非常用の懐中電灯"),
-		new Data((ID)3, "日記", "院長のものと思われる日記帳"),
+		new Data((ID)0, false),
 	};
 	
 	public static int Count

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,55 @@ public class AdventureManager : ManagerBase
 
 
 		SetCurrentPlayer(ParamCharacter.ID.Momoka);
+
+		ChangeMap(ParamMap.ID.WAITING_ROOM);
+		_mapItemButtonSource.gameObject.SetActive(false);
 		yield break;
+	}
+
+	public void ChangeMap(ParamMap.ID map)
+	{
+		var data = ParamMap.Get(map);
+		_mapNameText.text = data.Name;
+
+		foreach (var item in _mapItemList)
+		{
+			Destroy(item.gameObject);
+		}
+
+		var itemDataList = ParamMapItem.GetList(data.ItemList);
+		foreach (var itemData in itemDataList)
+		{
+			var instance = GameUtil.CreateInstance(_mapItemButtonSource);
+			instance.Setup(itemData.Name, itemData.IconIndex, () =>
+			{
+				GameUtil.GetManager<ScenarioManager>().ExecuteScenario("Opening");
+			});
+			_mapItemList.Add(instance);
+		}
+	}
+
+	public void SetMapName(string name)
+	{
+		_mapNameText.text = name;
+	}
+
+	public void AddMapItem(string name, int iconIndex, Func<IEnumerator> scenario)
+	{
+		var instance = GameUtil.CreateInstance(_mapItemButtonSource);
+		instance.Setup(name, iconIndex, () =>
+		{
+			GameUtil.GetManager<ScenarioManager>().ExecuteScenario(scenario);
+		});
+		_mapItemList.Add(instance);
+	}
+
+	public void ClearMapItems()
+	{
+		foreach (var item in _mapItemList)
+		{
+			Destroy(item.gameObject);
+		}
 	}
 
 	private void setNextPlayer(int dir)
@@ -70,7 +119,7 @@ public class AdventureManager : ManagerBase
 
 		for (int i = 0; i < ParamCharacter.Count; i++)
 		{
-			var go = _playerLocationA[i];
+			var go = _playerLocations[i];
 			_players[((int)_currentPlayer + i) % ParamCharacter.Count].SetTargetTransform(go.transform);
 		}
 
@@ -84,6 +133,7 @@ public class AdventureManager : ManagerBase
 
 	public override void OnStartGame()
 	{
+
 	}
 	
 	public void SetPlayerActive(ParamCharacter.ID id, bool active)
@@ -91,18 +141,18 @@ public class AdventureManager : ManagerBase
 		_playerActives[(int)id] = active;
 	}
 
-	public List<ParamItem.ID> GetPlayerItems(ParamCharacter.ID player = ParamCharacter.ID.Invalid)
+	public List<ParamItem.ID> GetPlayerItems(ParamCharacter.ID player = ParamCharacter.ID.NONE)
 	{
-		if(player == ParamCharacter.ID.Invalid)
+		if(player == ParamCharacter.ID.NONE)
 		{
 			player = _currentPlayer;
 		}
 		return _playerItems[(int)player];
 	}
 
-	public void AddPlayerItem(ParamItem.ID item, ParamCharacter.ID player = ParamCharacter.ID.Invalid)
+	public void AddPlayerItem(ParamItem.ID item, ParamCharacter.ID player = ParamCharacter.ID.NONE)
 	{
-		if (player == ParamCharacter.ID.Invalid)
+		if (player == ParamCharacter.ID.NONE)
 		{
 			player = _currentPlayer;
 		}
@@ -138,14 +188,21 @@ public class AdventureManager : ManagerBase
 	PlayerController[] _players;
 
 	[SerializeField]
-	GameObject[] _playerLocationA, playerLocationB;
+	GameObject[] _playerLocations;
 
 	[SerializeField]
 	ItemWindow _itemWindow;
 
+	[SerializeField]
+	MapItemButton _mapItemButtonSource;
+
+	[SerializeField]
+	Text _mapNameText;
 
 	bool[] _playerActives = new bool[ParamCharacter.Count];
 	List<ParamItem.ID>[] _playerItems = new List<ParamItem.ID>[ParamCharacter.Count];
 	
 	ParamCharacter.ID _currentPlayer = ParamCharacter.ID.Momoka;
+
+	List<MapItemButton> _mapItemList = new List<MapItemButton>();
 }

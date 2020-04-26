@@ -40,8 +40,6 @@ public static class ScenarioUtil
 
 	public static void ChangeMap(string name)
 	{
-		var manager = GameUtil.GetManager<MapManager>();
-		manager.ChangeMap(name);
 	}
 
 	public static void ChangePlayer(ParamCharacter.ID id)

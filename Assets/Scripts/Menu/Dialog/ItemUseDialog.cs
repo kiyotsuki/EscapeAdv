@@ -32,7 +32,7 @@ public class ItemUseDialog : DialogContentBase
 		_itemDesc.text = data.Desc;
 	}
 
-	ParamItem.ID _item = ParamItem.ID.Invalid;
+	ParamItem.ID _item = ParamItem.ID.NONE;
 
 	[SerializeField]
 	private Text _itemName, _itemDesc;

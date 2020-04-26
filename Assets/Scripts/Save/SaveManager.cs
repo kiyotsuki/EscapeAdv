@@ -49,9 +49,10 @@ public class SaveManager : ManagerBase
 		saveLabel += mapData.Name + ",";
 		for (int i = 0; i < ParamCharacter.Count; i++)
 		{
-			if (_saveData.GetCharaStatus((ParamCharacter.ID)i) != SaveData.CharaStatus.Inactive)
+			var id = (ParamCharacter.ID)i;
+			if (_saveData.GetCharaStatus(id) != SaveData.CharaStatus.Inactive)
 			{
-				saveLabel += ParamCharacter.Get(i).Name + " ";
+				saveLabel += ParamCharacter.Get(id).Name + " ";
 			}
 		}
 		PlayerPrefs.SetString($"Label[{slot}]", saveLabel);

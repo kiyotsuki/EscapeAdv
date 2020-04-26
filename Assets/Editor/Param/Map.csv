@@ -1,6 +1,11 @@
-変数名,Name,Prefab
-説明,名前,プレハブ名
-型,string,string
-初期値,null,null
+変数名,Name,ItemList
+説明,名前,アイテムリスト
+型,string,MapItem
+初期値,null,NONE
 #,,
-Test,テストマップ,TestMap
+WAITING_ROOM,待合室,WR_AROUND
+EXAMINATION_ROOM,診察室,ER_AROUND
+TREATMENT_ROOM,治療室,
+OFFICE_ROOM,事務室,
+STORE_ROOM,倉庫,
+DIRECTOR_ROOM,院長室,

@@ -26,6 +26,17 @@ public partial class ScenarioManager : ManagerBase
 		StartCoroutine(executeScenario(scenario));
 	}
 
+	public void ExecuteScenario(System.Func<IEnumerator> scenario)
+	{
+		if (_running)
+		{
+			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
+			return;
+		}
+		StartCoroutine(scenario());
+	}
+
+
 	private IEnumerator executeScenario(string scenario)
 	{
 		System.Type type = typeof(ScenarioCoroutine);

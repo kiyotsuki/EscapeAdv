@@ -7,22 +7,43 @@ public partial class ScenarioCoroutine
 {
 	public static IEnumerator Opening()
 	{
-		ChangeMap("Entrance");
+		//ChangeMap("Entrance");
+
+		var adventureManager = GameUtil.GetManager<AdventureManager>();
+		adventureManager.ClearMapItems();
+
 		ChangePlayer(ParamCharacter.ID.Momoka);
 		yield return FadeIn(3);
 		yield return new WaitForSeconds(1);
 		yield return StartTalk("おぉ～…！");
 
 		yield return new WaitForSeconds(1);
-
 		yield return StartTalk("すごーい！\n本物の廃墟だよー！！");
 
 		ChangePlayer(ParamCharacter.ID.Sakura);
 		yield return StartTalk("あーもー\nまた勝手に入って・・・");
 		yield return StartTalk("走ったら危ないでしょ！\nもっと足元とか、周囲に気を付けて・・・");
-		
+
+		ChangePlayer(ParamCharacter.ID.Momoka);
+		yield return StartTalk("やたー！\nさて、ふぉとじぇにっくな場所を探すよ！");
+
+		ChangePlayer(ParamCharacter.ID.Sakura);
+		yield return StartTalk("だめだこりゃ、聞いてないな・・・");
+
+		adventureManager.AddMapItem("あたりを見回す", 0, WR_Around);
+
 		yield break;
 	}
+
+	public static IEnumerator WR_Around()
+	{
+		ChangePlayer(ParamCharacter.ID.Momoka);
+		yield return StartTalk("うーん・・・");
+		yield return StartTalk("なんかこうかび臭いなぁ。");
+
+		yield break;
+	}
+
 
 	public static IEnumerator TestEvent()
 	{
