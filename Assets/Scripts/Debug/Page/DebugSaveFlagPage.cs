@@ -9,17 +9,17 @@ public class DebugSaveFlagPage : DebugManager.DebugPage
 
 	public override void Open(DebugManager manager)
 	{
-		_buttonTexts = new Text[(int)SaveData.SaveFlag.Max];
+		_buttonTexts = new Text[(int)GameDefine.SaveFlag.Max];
 
 		var saveManager = GameUtil.GetManager<SaveManager>();
 		var saveData = saveManager.GetSaveData();
-		for (int i = 0; i < (int)SaveData.SaveFlag.Max; i++)
+		for (int i = 0; i < (int)GameDefine.SaveFlag.Max; i++)
 		{
-			var flag = (SaveData.SaveFlag)i;
+			var flag = (GameDefine.SaveFlag)i;
 			_buttonTexts[i] = manager.AddButton($"{flag}:{saveData.GetSaveFlag(flag)}", () =>
 			{
-				var b = !saveData.GetSaveFlag(flag);
-				saveData.SetSaveFlag(flag, b);
+				var b = saveData.GetSaveFlag(flag) == 1 ? 0 : 1;
+				saveData.SetSaveFlag(flag, (byte)b);
 				_buttonTexts[(int)flag].text = $"{flag}:{b}";
 			});
 		}

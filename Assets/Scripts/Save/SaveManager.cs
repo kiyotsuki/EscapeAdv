@@ -45,16 +45,8 @@ public class SaveManager : ManagerBase
 
 		var now = System.DateTime.Now;
 		var saveLabel = now.ToString() + ",";
-		var mapData = ParamMap.Get(_saveData.GetCurrentMap());
-		saveLabel += mapData.Name + ",";
-		for (int i = 0; i < ParamCharacter.Count; i++)
-		{
-			var id = (ParamCharacter.ID)i;
-			if (_saveData.GetCharaStatus(id) != SaveData.CharaStatus.Inactive)
-			{
-				saveLabel += ParamCharacter.Get(id).Name + " ";
-			}
-		}
+		saveLabel += "MapName,";
+
 		PlayerPrefs.SetString($"Label[{slot}]", saveLabel);
 
 		PlayerPrefs.Save();

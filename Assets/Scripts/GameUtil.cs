@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 /// <summary>
 /// ゲームユーティリティ
@@ -27,5 +28,11 @@ public static class GameUtil
 		go.transform.SetParent(parent, false);
 		go.SetActive(true);
 		return go.GetComponent<T>();
+	}
+
+	public static SaveData GetSaveData()
+	{
+		var saveManager = GetManager<SaveManager>();
+		return saveManager.GetSaveData();
 	}
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdventureManager : ManagerBase
+public partial class AdventureManager : ManagerBase
 {
 	protected override IEnumerator Setup()
 	{
@@ -46,54 +46,86 @@ public class AdventureManager : ManagerBase
 
 		SetCurrentPlayer(ParamCharacter.ID.Momoka);
 
-		ChangeMap(ParamMap.ID.WAITING_ROOM);
+		ChangeMap(GameDefine.MapId.Room01);
 		_mapItemButtonSource.gameObject.SetActive(false);
+
+		MoveCamera("Default", 0.3f);
 		yield break;
 	}
 
-	public void ChangeMap(ParamMap.ID map)
+	public void MoveCamera(string location, float time)
 	{
-		var data = ParamMap.Get(map);
-		_mapNameText.text = data.Name;
+		_cameraController.MoveCamera(location, time);
+	}
 
+	public void OnStartEvent()
+	{
+		MoveCamera("Event", 0.3f);
+		_mapItemRoot.SetActive(false);
+	}
+
+	public void OnEndEvent()
+	{
+		MoveCamera("Default", 0.3f);
+		_mapItemRoot.SetActive(true);
+
+		var map = ScenarioUtil.GetCurrentMap();
+		SetupMap(map);
+	}
+
+	public void ChangeMap(GameDefine.MapId map)
+	{
+		var saveData = GameUtil.GetSaveData();
+		saveData.SetCurrentMap(map);
+
+		SetupMap(map);
+	}
+
+	public void AddMapItem(string name, string iconName, Func<IEnumerator> scenario)
+	{
+		var icon = _iconSprites[0];
+		foreach(var sprite in _iconSprites)
+		{
+			if(sprite.name == iconName)
+			{
+				icon = sprite;
+			}
+		}
+
+		MapItemButton itemButton = null;
 		foreach (var item in _mapItemList)
 		{
-			Destroy(item.gameObject);
-		}
-
-		var itemDataList = ParamMapItem.GetList(data.ItemList);
-		foreach (var itemData in itemDataList)
-		{
-			var instance = GameUtil.CreateInstance(_mapItemButtonSource);
-			instance.Setup(itemData.Name, itemData.IconIndex, () =>
+			if(item.gameObject.activeSelf == false)
 			{
-				GameUtil.GetManager<ScenarioManager>().ExecuteScenario("Opening");
-			});
-			_mapItemList.Add(instance);
+				item.gameObject.SetActive(true);
+				itemButton = item;
+				break;
+			}
 		}
-	}
 
-	public void SetMapName(string name)
-	{
-		_mapNameText.text = name;
-	}
+		if(itemButton == null)
+		{
+			itemButton = GameUtil.CreateInstance(_mapItemButtonSource);
+			_mapItemList.Add(itemButton);
+		}
 
-	public void AddMapItem(string name, int iconIndex, Func<IEnumerator> scenario)
-	{
-		var instance = GameUtil.CreateInstance(_mapItemButtonSource);
-		instance.Setup(name, iconIndex, () =>
+		itemButton.Setup(name, icon, () =>
 		{
 			GameUtil.GetManager<ScenarioManager>().ExecuteScenario(scenario);
 		});
-		_mapItemList.Add(instance);
 	}
 
 	public void ClearMapItems()
 	{
 		foreach (var item in _mapItemList)
 		{
-			Destroy(item.gameObject);
+			item.gameObject.SetActive(false);
 		}
+	}
+
+	public void SetMapName(string name)
+	{
+		_mapNameText.text = name;
 	}
 
 	private void setNextPlayer(int dir)
@@ -195,6 +227,8 @@ public class AdventureManager : ManagerBase
 
 	[SerializeField]
 	MapItemButton _mapItemButtonSource;
+	[SerializeField]
+	GameObject _mapItemRoot;
 
 	[SerializeField]
 	Text _mapNameText;
@@ -205,4 +239,10 @@ public class AdventureManager : ManagerBase
 	ParamCharacter.ID _currentPlayer = ParamCharacter.ID.Momoka;
 
 	List<MapItemButton> _mapItemList = new List<MapItemButton>();
+
+	[SerializeField]
+	CameraController _cameraController;
+
+	[SerializeField]
+	Sprite[] _iconSprites;
 }

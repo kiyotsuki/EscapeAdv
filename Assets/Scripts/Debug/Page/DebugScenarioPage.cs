@@ -8,7 +8,7 @@ public class DebugScenarioPage : DebugManager.DebugPage
 	public override void Open(DebugManager manager)
 	{
 		manager.AddButton("オープニング開始", ()=> {
-			ScenarioUtil.ExecuteScenario("Opening");
+			ScenarioUtil.ExecuteScenario(ScenarioCoroutine.Opening);
 			manager.HideMenu();
 		});
 	}

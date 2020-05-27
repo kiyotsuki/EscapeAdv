@@ -6,11 +6,8 @@ using System.Text;
 public class SaveData
 {
 	// 現在のマップ
-	private ParamMap.ID _currentMap;
+	private GameDefine.MapId _currentMap;
 
-	// 各キャラクターごとの状態
-	private CharaStatus[] _charaStatuses = new CharaStatus[ParamCharacter.Count];
-	
 	// 各キャラクターごとの所持アイテム
 	private List<ParamItem.ID>[] _hasItems = new List<ParamItem.ID>[]{
 		new List<ParamItem.ID>(),
@@ -19,45 +16,18 @@ public class SaveData
 	};
 
 	// ゲーム進行フラグ
-	private bool[] _saveFlags = new bool[(int)SaveFlag.Max];
-
-
-	public enum SaveFlag
-	{
-		TestA,
-		TestB,
-		TestC,
-		Max,
-	}
-
-	public enum CharaStatus
-	{
-		Normal,
-		Scare,
-		Brave,
-		Inactive,
-	}
+	private byte[] _saveFlags = new byte[(int)GameDefine.SaveFlag.Max];
 
 	public SaveData()
 	{
 	}
 
-	public void SetCharaStatus(ParamCharacter.ID id, CharaStatus status)
-	{
-		_charaStatuses[(int)id] = status;
-	}
-
-	public CharaStatus GetCharaStatus(ParamCharacter.ID id)
-	{
-		return _charaStatuses[(int)id];
-	}
-
-	public bool GetSaveFlag(SaveFlag id)
+	public byte GetSaveFlag(GameDefine.SaveFlag id)
 	{
 		return _saveFlags[(int)id];
 	}
 
-	public void SetSaveFlag(SaveFlag id, bool flag)
+	public void SetSaveFlag(GameDefine.SaveFlag id, byte flag)
 	{
 		_saveFlags[(int)id] = flag;
 	}
@@ -77,12 +47,12 @@ public class SaveData
 		return _hasItems[(int)chara];
 	}
 
-	public void SetCurrentMap(ParamMap.ID map, bool momoka, bool sakura, bool tsubaki)
+	public void SetCurrentMap(GameDefine.MapId id)
 	{
-		_currentMap = map;
+		_currentMap =id;
 	}
 
-	public ParamMap.ID GetCurrentMap()
+	public GameDefine.MapId GetCurrentMap()
 	{
 		return _currentMap;
 	}
@@ -90,11 +60,6 @@ public class SaveData
 	public void Save(BinaryWriter writer)
 	{
 		writer.Write((byte)_currentMap);
-
-		for (int i = 0; i < _charaStatuses.Length; i++)
-		{
-			writer.Write((byte)_charaStatuses[i]);
-		}
 
 		for (int i = 0; i < _hasItems.Length; i++)
 		{
@@ -114,12 +79,7 @@ public class SaveData
 
 	public void Load(BinaryReader reader)
 	{
-		_currentMap = (ParamMap.ID) reader.ReadByte();
-
-		for (int i = 0; i < _charaStatuses.Length; i++)
-		{
-			_charaStatuses[i] = (CharaStatus)reader.ReadByte();
-		}
+		_currentMap = (GameDefine.MapId) reader.ReadByte();
 
 		for (int i = 0; i < _hasItems.Length; i++)
 		{
@@ -133,7 +93,7 @@ public class SaveData
 
 		for (int i = 0; i < _saveFlags.Length; i++)
 		{
-			_saveFlags[i] = reader.ReadBoolean();
+			_saveFlags[i] = reader.ReadByte();
 		}
 	}
 }

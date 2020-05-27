@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public partial class ScenarioManager : ManagerBase
@@ -10,22 +11,6 @@ public partial class ScenarioManager : ManagerBase
 		yield break;
 	}
 	
-	/// <summary>
-	/// シナリオを起動する
-	/// ScenarioCoroutineクラスから該当の名前を探して実行する
-	/// </summary>
-	/// <param name="name"></param>
-	public void ExecuteScenario(string scenario)
-	{
-		if(_running)
-		{
-			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
-			return;
-		}
-
-		StartCoroutine(executeScenario(scenario));
-	}
-
 	public void ExecuteScenario(System.Func<IEnumerator> scenario)
 	{
 		if (_running)
@@ -33,28 +18,21 @@ public partial class ScenarioManager : ManagerBase
 			Debug.LogError("シナリオ実行中に別のシナリオを実行しようとしました Scenario=" + scenario);
 			return;
 		}
-		StartCoroutine(scenario());
+		StartCoroutine(executeScenario(scenario));
 	}
 
 
-	private IEnumerator executeScenario(string scenario)
+	private IEnumerator executeScenario(System.Func<IEnumerator> scenario)
 	{
-		System.Type type = typeof(ScenarioCoroutine);
-		var method = type.GetMethod(scenario);
-		if(method == null)
-		{
-			Debug.LogError("シナリオが見つかりません Scenario=" + scenario);
-			yield break;
-		}
-
+		GameUtil.GetManager<AdventureManager>().OnStartEvent();
+		
 		// シナリオ実行開始状態に
 		_running = true;
 
 		// シナリオ実行
-		yield return method.Invoke(null, null);
+		yield return scenario();
 
 		// 以下シナリオ実行終了
-
 		var fadeManager = GameUtil.GetManager<FadeManager>();
 		if (fadeManager.IsCoverd())
 		{
@@ -64,8 +42,18 @@ public partial class ScenarioManager : ManagerBase
 
 		// トークを隠す
 		_talkWindow.Hide();
+		GameUtil.GetManager<AdventureManager>().OnEndEvent();
 
 		_running = false;
+	}
+
+	/// <summary>
+	/// シナリオ実行中か判定
+	/// </summary>
+	/// <returns></returns>
+	public bool IsRunning()
+	{
+		return _running;
 	}
 
 	/// <summary>
@@ -78,16 +66,19 @@ public partial class ScenarioManager : ManagerBase
 	}
 
 	/// <summary>
-	/// シナリオ実行中か判定
+	/// 選択肢ウィンドウ取得
 	/// </summary>
 	/// <returns></returns>
-	public bool IsRunning()
+	public SelectionWindow GetSelectionWindow()
 	{
-		return _running;
+		return _selectionWindow;
 	}
 
 	[SerializeField]
 	TalkWindow _talkWindow = null;
+
+	[SerializeField]
+	SelectionWindow _selectionWindow = null;
 
 	bool _running = false;
 

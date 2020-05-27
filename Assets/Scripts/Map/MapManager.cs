@@ -46,7 +46,7 @@ public class MapManager : ManagerBase
 		var ev = _currentMap.GetMapEvent(pos);
 		if (ev != null)
 		{
-			scenarioManager.ExecuteScenario(ev.EventName);
+			//scenarioManager.ExecuteScenario(ev.EventName);
 		}
 		else
 		{

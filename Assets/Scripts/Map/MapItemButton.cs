@@ -6,15 +6,23 @@ using UnityEngine.UI;
 
 public class MapItemButton : MonoBehaviour
 {
-	public void Setup(string text, int iconIndex, Action onClick)
+	public void Awake()
 	{
-		_text.text = text;
-		_icon.sprite = _iconSprites[iconIndex];
-
 		_button.onClick.AddListener(() =>
 		{
-			onClick();
+			if (_onClick != null)
+			{
+				_onClick();
+			}
 		});
+	}
+
+	public void Setup(string text, Sprite icon, Action onClick)
+	{
+		_text.text = text;
+		_icon.sprite = icon;
+
+		_onClick = onClick;
 	}
 
 	[SerializeField]
@@ -28,4 +36,6 @@ public class MapItemButton : MonoBehaviour
 
 	[SerializeField]
 	private Sprite[] _iconSprites;
+
+	private Action _onClick;
 }

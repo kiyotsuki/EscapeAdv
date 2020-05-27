@@ -10,7 +10,7 @@ public class ItemUseDialog : DialogContentBase
 		{
 			Close(() =>
 			{
-				ScenarioUtil.ExecuteScenario("CheckItem_" + _item);
+				//ScenarioUtil.ExecuteScenario("CheckItem_" + _item);
 			});
 		});
 
@@ -18,7 +18,7 @@ public class ItemUseDialog : DialogContentBase
 		{
 			Close(() =>
 			{
-				ScenarioUtil.ExecuteScenario("UseItem_" + _item);
+				//ScenarioUtil.ExecuteScenario("UseItem_" + _item);
 			});
 		});
 	}
